@@ -1,0 +1,118 @@
+- name: gnome | shell settings | button-layout
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: "':close'"
+
+# Disable hot corners
+- name: gnome | shell settings | enable-hot-corners
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/shell/interface/enable-hot-corners"
+    value: "false"
+
+- name: gnome | shell settings | event-sounds (disable)
+  tags: gnome,audio,sounds,alerts
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/sound/event-sounds"
+    value: "false"
+
+- name: gnome | shell settings | disable hidpi-daemon
+  tags: gnome,gnome-shell,hidpi
+  become_user: jay
+  dconf:
+    key: "/com/system76/hidpi/enable"
+    value: "false"
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu"]
+
+# Disable screen blanking
+- name: gnome | shell settings | idle-delay
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/session/idle-delay"
+    value: "uint32 0"
+
+# Disable input sounds
+- name: gnome | shell settings | input-feedback-sounds (disable input sounds)
+  tags: gnome,audio,sounds,alerts
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/sound/input-feedback-sounds"
+    value: "false"
+
+# Disable automatic screen lock
+- name: gnome | shell settings | lock-enabled
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/screensaver/lock-enabled"
+    value: "false"
+
+- name: gnome | shell settings | old-files-age
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/privacy/old-files-age"
+    value: "uint32 14"
+
+- name: gnome | shell settings | remove-old-temp-files
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/privacy/remove-old-temp-files"
+    value: "true"
+
+- name: gnome | shell settings | remove-old-trash-files
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/privacy/remove-old-trash-files"
+    value: "true"
+
+- name: gnome | shell settings | search-providers
+  tags: gnome,search
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/search-providers/disabled"
+    value: "['org.gnome.Nautilus.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Documents.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.Calendar.desktop']"
+
+- name: gnome | shell settings | show-battery-percentage
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/interface/show-battery-percentage"
+    value: "true"
+
+# Disable lock screen notifications
+- name: gnome | shell settings | show-in-lock-screen
+  tags: gnome,gnome-lockscreen
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+    value: "false"
+
+- name: gnome | shell settings | tile-by-default
+  tags: gnome,gnome-lockscreen
+  become_user: jay
+  dconf:
+    key: "/org/gnome/shell/extensions/pop-shell/tile-by-default"
+    value: "true"
+  when: ansible_distribution == "Pop!_OS"
+
+- name: gnome | shell settings | workspaces-only-on-primary
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/shell/overrides/workspaces-only-on-primary"
+    value: "true"
+
+- name: gnome | shell settings | set gnome-screenshot default save directory
+  tags: gnome,gnome-shell
+  become_user: jay
+  dconf:
+    key: "/org/gnome/gnome-screenshot/auto-save-directory"
+    value: "'/home/jay'"

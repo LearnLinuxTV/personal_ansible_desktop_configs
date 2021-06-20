@@ -1,0 +1,35 @@
+- name: mate | packages | install mate packages
+  tags: mate,mate-packages
+  package:
+    name:
+      - atril
+      - caja
+      - engrampa
+      - eom
+      - mate-applets
+      - mate-backgrounds
+      - mate-control-center
+      - mate-desktop
+      - mate-icon-theme
+      - mate-media
+      - mate-menus
+      - mate-notification-daemon
+      - mate-panel
+      - mate-polkit
+      - mate-power-manager
+      - mate-screensaver
+      - mate-session-manager
+      - mate-settings-daemon
+      - mate-system-monitor
+      - mate-terminal
+      - mate-themes
+      - mate-utils
+      - plank
+      - pluma
+
+- name: mate | packages | install ubuntu mate themes
+  tags: mate,mate-packages
+  package:
+    name: ubuntu-mate-artwork
+    state: latest
+  when: ansible_distribution == "Ubuntu"

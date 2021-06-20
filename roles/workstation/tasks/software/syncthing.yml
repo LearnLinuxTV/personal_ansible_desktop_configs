@@ -1,0 +1,153 @@
+# add syncthing-controlled directories
+- name: software | syncthing | create directories
+  tags: syncthing
+  file:
+    path: /home/jay/{{ item.dir }}
+    state: directory
+    owner: jay
+    group: jay
+    mode: 0700
+  with_items:
+    - { dir: bin }
+    - { dir: desktop }
+    - { dir: documents }
+    - { dir: downloads }
+    - { dir: projects }
+    - { dir: templates }
+  when: syncthing is defined and syncthing == true
+
+- name: software | syncthing | copy .stignore file to synced directories
+  tags: syncthing
+  copy:
+    src: users/jay/stignore
+    dest: /home/jay/{{ item.dir }}/.stignore
+    owner: jay
+    group: jay
+    mode: 0600
+  with_items:
+    - { dir: bin }
+    - { dir: desktop }
+    - { dir: documents }
+    - { dir: downloads }
+    - { dir: projects }
+    - { dir: templates }
+  when: syncthing is defined and syncthing == true
+
+# syncthing repository for debian and ubuntu
+- name: software | syncthing | install apt key
+  tags: syncthing
+  apt_key:
+    url: https://syncthing.net/release-key.txt
+    state: present
+  when:
+    - ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    - syncthing is defined
+    - syncthing == true
+
+- name: software | syncthing | install repository
+  tags: syncthing
+  apt_repository:
+    repo: deb https://apt.syncthing.net/ syncthing stable
+    state: present
+    filename: syncthing
+  when:
+    - ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    - syncthing is defined
+    - syncthing == true
+
+- name: software | syncthing | install syncthing packages
+  tags: syncthing
+  package:
+    name:
+      - syncthing
+      #- syncthing-gtk
+    state: latest
+  register: syncthing_installed
+  when:
+    - syncthing is defined
+    - syncthing == true
+
+#- name: software | syncthing | add .desktop file for autostarting syncthing-gtk
+#  tags: syncthing
+#  copy:
+#    src: users/jay/syncthing-gtk.desktop
+#    dest: /home/jay/.config/autostart/syncthing-gtk.desktop
+#    owner: jay
+#    group: jay
+#    mode: 0600
+#  when:
+#    - syncthing is defined
+#  - syncthing == true
+
+#- name: software | syncthing | ensure syncthing-gtk config folder exists
+#  tags: syncthing
+#  file:
+#    path: /home/jay/.config/syncthing-gtk
+#    state: directory
+#    owner: jay
+#    group: jay
+#    mode: 0700
+#  when:
+#   - syncthing is defined
+#    - syncthing == true
+
+#- name: software | syncthing | add initial configuration file for syncthing-gtk
+#  tags: syncthing
+#  copy:
+#    src: users/jay/syncthing_config.json
+#    dest: /home/jay/.config/syncthing-gtk/config.json
+#    owner: jay
+#    group: jay
+#    mode: 0600
+#  when:
+#    - syncthing is defined
+#    - syncthing == true
+
+# Enable and start syncthing
+# Note: Not using systemd module because it triggers a dbus error due to no session while user is not logged in
+- name: software | syncthing | start and enable syncthing
+  tags: syncthing
+  command: "{{ item }}"
+  with_items:
+    - systemctl enable syncthing@jay
+    - systemctl restart syncthing@jay
+  when: syncthing_installed.changed
+
+# Adjust configuration file
+- name: software | syncthing | pause to ensure config file exists
+  tags: syncthing
+  become_user: jay
+  wait_for:
+    path: /home/jay/.config/syncthing/config.xml
+    delay: 10
+  when: syncthing_installed.changed
+
+- name: software | syncthing | config.xml - disable browser
+  tags: syncthing
+  become_user: jay
+  replace:
+    path: /home/jay/.config/syncthing/config.xml
+    regexp: "<startBrowser>true</startBrowser>"
+    replace: "<startBrowser>false</startBrowser>"
+  notify: restart_syncthing
+  when:
+    - syncthing is defined
+    - syncthing == true
+
+- name: software | syncthing | config.xml - set ui theme
+  tags: syncthing
+  become_user: jay
+  replace:
+    path: /home/jay/.config/syncthing/config.xml
+    regexp: "<theme>default</theme>"
+    replace: "<theme>dark</theme>"
+  notify: restart_syncthing
+  when:
+    - syncthing is defined
+    - syncthing == true
+
+- name: software | syncthing | remove default sync directory (~/Sync) from host
+  tags: syncthing
+  file:
+    path: /home/jay/Sync
+    state: absent

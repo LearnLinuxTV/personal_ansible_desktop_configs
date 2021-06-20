@@ -1,0 +1,32 @@
+# Load distro-specific variables
+- include_vars: "{{ ansible_distribution }}.yml"
+  tags: always
+
+- block:
+  # Make sure users exist on the system
+  - import_tasks: users/jay.yml
+  - import_tasks: users/root.yml
+  - import_tasks: users/simone.yml
+
+  # Set up the ansible environment
+  - import_tasks: ansible_setup.yml
+
+  # install software
+  - import_tasks: software/repositories.yml
+  - import_tasks: software/packages_development.yml
+  - import_tasks: software/packages_cleanup.yml
+  - import_tasks: software/packages_pip.yml
+  - import_tasks: software/packages_utilities.yml
+
+  # Perform remaining tasks:
+  - import_tasks: system_setup/clock.yml
+  - import_tasks: system_setup/cron.yml
+  - import_tasks: system_setup/locale.yml
+  - import_tasks: system_setup/logging.yml
+  - import_tasks: system_setup/memory.yml
+  - import_tasks: system_setup/microcode.yml
+  - import_tasks: system_setup/openssh.yml
+  - import_tasks: system_setup/scripts.yml
+
+  rescue:
+    - set_fact: task_failed=true

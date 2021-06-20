@@ -1,0 +1,97 @@
+- name: gnome | peripherals | enable natural scrolling (mouse)
+  tags: gnome,mouse,peripherals
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/peripherals/mouse/natural-scroll"
+    value: "true"
+
+- name: gnome | peripherals | enable natural scrolling (touchpad)
+  tags: gnome,mouse,peripherals
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/peripherals/touchpad/natural-scroll"
+    value: "true"
+
+- name: gnome | peripherals | enable cursor acceleration (mouse)
+  tags: gnome,mouse,peripherals
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/peripherals/mouse/accel-profile"
+    value: "'adaptive'"
+
+- name: gnome | peripherals | increase cursor speed (mouse)
+  tags: gnome,mouse,peripherals
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/peripherals/mouse/speed"
+    value: "0.59999999999999998"
+
+- name: gnome | peripherals | increase cursor speed (touchpad)
+  tags: gnome,mouse,peripherals
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/peripherals/touchpad/speed"
+    value: "0.59999999999999998"
+
+- name: gnome | peripherals | set manual night-light schedule
+  tags: gnome,peripherals,night-light
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic"
+    value: "false"
+
+- name: gnome | peripherals | set manual night-light schedule start time
+  tags: gnome,peripherals,night-light
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-from"
+    value: "23.0"
+
+- name: gnome | peripherals | set manual night-light schedule stop time
+  tags: gnome,peripherals,night-light
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-to"
+    value: "7.4999999999999982"
+
+- name: gnome | peripherals | enable night-light
+  tags: gnome,peripherals,night-light
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
+    value: "true"
+
+- name: gnome | peripherals | set power button behavior
+  tags: gnome,peripherals,power
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
+    value: "'suspend'"
+
+- name: gnome | peripherals | enable automatic suspend while plugged in to ac
+  tags: gnome,peripherals,power
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
+    value: "'suspend'"
+
+- name: gnome | peripherals | set timeout for automatic suspend while plugged in to ac
+  tags: gnome,peripherals,power
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout"
+    value: "2700"
+
+- name: gnome | peripherals | enable automatic suspend while on battery
+  tags: gnome,peripherals,power
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
+    value: "'suspend'"
+
+- name: gnome | peripherals | set timeout for automatic suspend while plugged in to ac
+  tags: gnome,peripherals,power
+  become_user: jay
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout"
+    value: "1500"

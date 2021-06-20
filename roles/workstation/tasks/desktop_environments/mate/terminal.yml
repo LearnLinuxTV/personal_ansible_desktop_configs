@@ -1,0 +1,22 @@
+- name: mate | terminal | set terminal configuration
+  tags: mate,mate-terminal
+  become_user: jay
+  dconf:
+    #    key: "/org/mate/terminal/profiles/b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
+    key: "/org/mate/terminal/profiles/default/{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: background-color, value: "'#000000000000'" }
+    - { key: background-darkness, value: "0.90000000000000002" }
+    - { key: background-type, value: "'transparent'" }
+    - { key: default-show-menubar, value: "false" }
+    - { key: default-size-columns, value: "100" }
+    - { key: font, value: "'Fira Code 11'" }
+    - { key: foreground-color, value: "'#AAAAAAAAAAAA'" }
+    - { key: scrollback-unlimited, value: "true" }
+    - { key: scrollbar-position, value: "'hidden'" }
+    - { key: silent-bell, value: "true" }
+    - { key: use-custom-default-size, value: "true" }
+    - { key: use-system-font, value: "false" }
+    - { key: use-theme-colors, value: "false" }
+    - { key: visible-name, value: "'Main'" }

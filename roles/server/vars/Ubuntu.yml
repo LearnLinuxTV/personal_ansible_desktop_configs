@@ -1,0 +1,12 @@
+nrpe_config_file_dest: /etc/nagios/nrpe.cfg
+nrpe_config_file_src: nrpe.cfg_debian_ubuntu
+monitoring_plugins_path: /usr/lib/nagios/plugins
+monitoring_plugins_package: monitoring-plugins-basic
+nrpe_allowed_hosts: 127.0.0.1,172.16.59.104,172.16.249.9
+nrpe_group: nagios
+nrpe_log_file: /var/log/nrpe.log
+nrpe_package: nagios-nrpe-server
+nrpe_pid_file: /var/run/nagios/nrpe.pid
+nrpe_service: nagios-nrpe-server
+nrpe_user: nagios
+qemu_agent_service: qemu-guest-agent

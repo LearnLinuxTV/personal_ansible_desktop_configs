@@ -1,0 +1,22 @@
+- name: software | google-chrome | add repository key
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: software | google-chrome | add repository
+  apt_repository:
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: google-chrome
+  register: chrome_repo
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: software | google-chrome | update sources (repo added or changed)
+  apt:
+    update_cache: yes
+  changed_when: False
+  when: chrome_repo.changed
+
+- name: software | google-chrome | install package
+  apt:
+    name: google-chrome-stable
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]

@@ -1,0 +1,21 @@
+# note: snap packages not automated in arch yet, snapd is not available in repo
+
+- name: software | chromium | install snap package
+  tags: packages,chromium,snap,workstation-packages
+  snap:
+    name:  chromium
+    state: present
+  when:
+    - ansible_distribution != "Archlinux"
+    - chromium is defined
+    - chromium == true
+
+- name: software | chromium | install distro package (arch)
+  tags: packages,chromium,snap,workstation-packages
+  package:
+    name:  chromium
+    state: latest
+  when:
+    - ansible_distribution == "Archlinux"
+    - chromium is defined
+    - chromium == true

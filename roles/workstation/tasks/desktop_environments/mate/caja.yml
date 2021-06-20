@@ -1,0 +1,85 @@
+# Desktop
+- name: mate | caja | show computer icon on desktop
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/desktop/computer-icon-visible"
+    value: "true"
+
+# File manager preferences
+- name: mate | caja | date-format
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/preferences/date-format"
+    value: "'iso'"
+
+- name: mate | caja | default-folder-viewer (sets list view)
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/preferences/default-folder-viewer"
+    value: "'list-view'"
+
+- name: mate | caja | default-visible-columns
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/list-view/default-visible-columns"
+    value: "['name', 'size', 'date_modified']"
+
+- name: mate | caja | enable-delete
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/preferences/enable-delete"
+    value: "true"
+
+- name: mate | caja | sort-directories-first
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/preferences/sort-directories-first"
+    value: "false"
+
+- name: mate | caja | start-with-sidebar
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/window-state/start-with-sidebar"
+    value: "false"
+
+- name: mate | caja | start-with-toolbar
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/window-state/start-with-toolbar"
+    value: "false"
+
+- name: mate | caja | toolbar-icons-size
+  tags: mate,mate-desktop
+  become_user: jay
+  dconf:
+    key: "/org/mate/desktop/interface/toolbar-icons-size"
+    value: "'small-toolbar'"
+
+- name: mate | caja | toolbar-style
+  tags: mate,mate-desktop
+  become_user: jay
+  dconf:
+    key: "/org/mate/desktop/interface/toolbar-style"
+    value: "'icons'"
+
+- name: mate | caja | use-iec-units
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/preferences/use-iec-units"
+    value: "true"
+
+- name: mate | caja | volumes-visible
+  tags: caja,mate
+  become_user: jay
+  dconf:
+    key: "/org/mate/caja/desktop/volumes-visible"
+    value: "true"

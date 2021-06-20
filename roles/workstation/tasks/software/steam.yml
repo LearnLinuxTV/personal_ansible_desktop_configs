@@ -1,0 +1,89 @@
+# For some reason Manjaro is detected as Archlinux
+- name: software | steam | check if distribution is manjaro
+  stat:
+    path: /usr/bin/manjaro-hello
+  register: manjaro
+  when:
+    - ansible_distribution == "Archlinux"
+    - steam is defined
+    - steam == true
+
+- name: software | steam | steam | enable multilib (arch)
+  tags: steam,steam,multilib
+  blockinfile:
+    state: present
+    backup: yes
+    path: /etc/pacman.conf
+    marker: '# {mark} ANSIBLE MANAGED BLOCK MULTILIB'
+    block: |
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+  register: multilib
+  when:
+    - ansible_distribution == "Archlinux"
+    - manjaro.stat.exists == False
+    - steam is defined
+    - steam == true
+
+- name: software | steam | update cache (multilib added) (arch)
+  tags: steam,steam,multilib
+  pacman: update_cache=yes
+  when:
+    - multilib.changed
+    - ansible_distribution == "Archlinux"
+
+# As of 2020-09-30, multiarch is still required to be enabled in Debian and Ubuntu
+# Note: Not required in Pop OS, apparently
+- name: steam | add multiarch (debian, ubuntu)
+  tags: steam,steam,multiarch
+  lineinfile:
+      dest: /var/lib/dpkg/arch
+      regexp: "^i386"
+      line: "i386"
+      create: yes
+  when:
+    - ansible_distribution in ['Debian', 'Ubuntu']
+    - steam is defined
+    - steam == true
+
+# For Debian and Ubuntu, set up acceptance of steam license before continuing
+- name: software | steam | accept license
+  tags: gaming,steam
+  debconf:
+    name: "steam"
+    question: "steam/question"
+    value: "I AGREE"
+    vtype: "select"
+  when:
+    - ansible_distribution in ["Debian", "Ubuntu"]
+    - steam is defined
+    - steam == true
+
+- name: software | steam | install package
+  tags: steam,steam
+  package:
+    state: latest
+    name: "{{ steam_package }}"
+  when:
+    - steam is defined
+    - steam == true
+
+- name: software | steam | install steam-devices package (debian, ubuntu, etc)
+  tags: steam,steam
+  package:
+    state: latest
+    name: steam-devices
+  when:
+    - ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    - steam is defined
+    - steam == true
+
+- name: install vulkan drivers (debian, ubuntu, etc)
+  tags: drivers,steam
+  package:
+    state: latest
+    name: mesa-vulkan-drivers
+  when:
+    - ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    - steam is defined
+    - steam == true

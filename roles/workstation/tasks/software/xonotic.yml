@@ -1,0 +1,10 @@
+- name: software | xonotic | install package
+  tags: packages,flatpak,games,xonotic,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.xonotic.Xonotic
+    method: user
+    state: present
+  when:
+    - xonotic is defined
+    - xonotic == true

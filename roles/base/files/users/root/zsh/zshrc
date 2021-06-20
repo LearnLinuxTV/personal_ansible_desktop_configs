@@ -1,0 +1,147 @@
+###### Prompt
+prompt='%F{35}%* [%j] [%m:%F{75}%f%F{69}%c%f%F{35}] %F{black}%K{red}%#%f%k '
+
+##### History
+
+# Set history file
+HISTFILE=~/.zhistory
+
+# Set history size
+HISTSIZE=10000
+
+# Set the number of lines in $HISTFILE
+SAVEHIST="${HISTSIZE}"
+
+# Enable history search with up and down arrows
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
+
+
+##### Aliases
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias back='cd $OLDPWD'
+alias c='clear'
+alias cd..='cd ..'
+alias cp='cp -iv'
+alias chmod="chmod -c"
+alias chown="chown -c"
+alias e="vim -O "
+alias E="vim -o "
+alias egrep='egrep --colour=auto'
+alias extip='curl icanhazip.com'
+alias grep='grep --color=auto'
+alias l.='ls -lhFa --time-style=long-iso --color=auto'
+alias ll='ls'
+alias ln='ln -iv'
+alias ls='ls -lhF --color=auto --human-readable --time-style=long-iso --classify'
+alias lsmount='mount |column -t'
+alias mkdir='mkdir -pv'
+alias mv='mv -iv'
+alias ports='netstat -tulanp'
+alias h='history -i'
+alias history='history -i'
+alias j='jobs -l'
+alias rm='rm -iv'
+alias rmdir='rmdir -v'
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+alias ssha='eval $(ssh-agent) && ssh-add'
+alias svim='sudo vim'
+alias tn=' tmux new -s'
+alias wget='wget -c'
+
+if command -v colordiff > /dev/null 2>&1; then
+    alias diff="colordiff -Nuar"
+else
+    alias diff="diff -Nuar"
+fi
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+# Safetynets
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# package management
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
+alias install='sudo apt-get install'
+
+##### Functions
+
+# Easily extract archives
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjvf $1    ;;
+      *.tar.gz)    tar xzvf $1    ;;
+      *.bz2)       bzip2 -d $1    ;;
+      *.rar)       unrar2dir $1    ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1    ;;
+      *.tgz)       tar xzf $1    ;;
+      *.zip)       unzip2dir $1     ;;
+      *.Z)         uncompress $1    ;;
+      *.7z)        7z x $1    ;;
+      *.ace)       unace x $1    ;;
+      *)           echo "'$1' cannot be extracted via extract()"   ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+
+reload () {
+    exec "${SHELL}" "$@"
+}
+
+
+##### shopt
+
+# save timestamp of command and duration
+setopt extended_history
+
+# Add commands as they are typed, don't wait until shell exit
+setopt inc_append_history
+
+# when trimming history, lose oldest duplicates first
+setopt hist_expire_dups_first
+
+# Do not write events to history that are duplicates of previous events
+setopt hist_ignore_dups
+
+# remove command line from history list when first character on the line is a space
+setopt hist_ignore_space
+
+# When searching history don't display results already cycled through twice
+setopt hist_find_no_dups
+
+# don't execute, just expand history
+setopt hist_verify
+
+# Stop annoying error when using asterisk in shell commands (i.e. scp server:*.txt .)
+setopt nonomatch
+
+# extended globbing, awesome!
+setopt extendedGlob
+
+# Turn on command substitution in the prompt (and parameter expansion and arithmetic expansion).
+setopt promptsubst

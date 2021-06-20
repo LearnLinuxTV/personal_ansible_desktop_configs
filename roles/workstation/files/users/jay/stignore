@@ -1,0 +1,6 @@
+*.ini
+*.kdenlive-tmp
+*.swp
+*.pyc
+*.~lock.*
+(?d).DS_Store

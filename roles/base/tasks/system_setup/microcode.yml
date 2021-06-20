@@ -1,0 +1,17 @@
+- name: system setup | microcode | install package for amd
+  tags: amd,cpu,microcode,system setup
+  package:
+    name: "{{ amd_microcode_package }}"
+    state: latest
+  when:
+    - microcode_amd_install is defined
+    - microcode_amd_install == true
+
+- name: system setup | microcode | install package for intel
+  tags: cpu,intel,microcode,system setup
+  package:
+    name: "{{ intel_microcode_package }}"
+    state: latest
+  when:
+    - microcode_intel_install is defined
+    - microcode_intel_install == true

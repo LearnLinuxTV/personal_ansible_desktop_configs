@@ -1,0 +1,71 @@
+- name: software | install workstation distribution packages
+  tags: packages,workstation-packages
+  package:
+    name:
+      - acpid
+      - alsa-utils
+      - arandr
+      - asunder
+      - cifs-utils
+      - "{{ cups_package }}"
+      - "{{ cryptsetup_package }}"
+      - dconf-editor
+      - dialog
+      - easytag
+      - exfat-utils
+      - "{{ font_fira_mono_package }}"
+      - "{{ font_hack_ttf_package }}"
+      - "{{ font_inconsolata_package }}"
+      - "{{ font_noto_emoji_package }}"
+      - "{{ font_terminus_package }}"
+      - geany
+      - gparted
+      - "{{ hunspell_package }}"
+      - "{{ hyphen_package }}"
+      - "{{ p7zip_package }}"
+      - "{{ libnotify_package }}"
+      - "{{ mpv_package}}"
+      - "{{ network_manager_openvpn_package }}"
+      - "{{ network_manager_package }}"
+      - "{{ network_manager_pptp_package }}"
+      - "{{ network_manager_vpnc_package }}"
+      - neovim
+      - pavucontrol
+      - shotwell
+      - simplescreenrecorder
+      - smbclient
+      - sshpass
+      - "{{ ssh_askpass_package }}"
+      - terminator
+      - transmission-gtk
+      - unrar
+      - "{{ wireless_tools_package }}"
+      - "{{ wpa_supplicant_package }}"
+      - x2goclient
+
+- name: software | install system packages specific to debian and ubuntu
+  tags: packages,system,system-packages,workstation-packages
+  package:
+    name:
+      - synaptic
+      - vim-gtk3
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: software | remove unneeded workstation packages on debian and ubuntu hosts
+  tags: cleanup,packages,workstation-packages
+  package:
+    state: absent
+    name:
+      - firefox*
+      - libreoffice-base-core
+      - libreoffice-calc
+      - libreoffice-common
+      - libreoffice-core
+      - libreoffice-draw
+      - libreoffice-gnome
+      - libreoffice-gtk3
+      - libreoffice-impress
+      - libreoffice-math
+      - libreoffice-writer
+      - thunderbird*
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]

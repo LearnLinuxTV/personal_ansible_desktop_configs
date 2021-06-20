@@ -1,0 +1,18 @@
+- name: system setup | development packages | install packages
+  tags: dev,development,packages,python,ruby
+  package:
+    name:
+      - fabric
+      - flake8
+      - git
+      - perl
+      - "{{ python_flake8_package }}"
+      - "{{ python_package }}"
+      - "{{ python_pip_package }}"
+      - "{{ python_pyflakes_package }}"
+      - python-setuptools
+      - "{{ python_virtualenv_package }}"
+      - ruby
+      - "{{ ruby_rake_package }}"
+      - tig
+    state: latest

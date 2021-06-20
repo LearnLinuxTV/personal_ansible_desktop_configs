@@ -1,0 +1,43 @@
+- name: system setup | autofs | install package
+  tags: autofs
+  package:
+    name: autofs
+  when:
+    - autofs is defined
+    - autofs == true
+
+- name: autofs | start and enable daemon
+  tags: autofs
+  service:
+    name: autofs
+    state: started
+    enabled: true
+  when:
+    - autofs is defined
+    - autofs == true
+
+- name: system setup | autofs | copy auto.master config file
+  tags: autofs,dotfiles,dotfiles-jay
+  copy:
+    src: autofs/auto.master
+    dest: "{{ autofs_master_config }}"
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - autofs is defined
+    - autofs == true
+  notify: restart_autofs
+
+- name: system setup | autofs | copy auto.nfs config file
+  tags: autofs,dotfiles,dotfiles-jay
+  copy:
+    src: autofs/auto.nfs
+    dest: "{{ autofs_nfs_config }}"
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - autofs is defined
+    - autofs == true
+  notify: restart_autofs

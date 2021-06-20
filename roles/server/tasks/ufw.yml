@@ -1,0 +1,329 @@
+- name: ufw | install package
+  tags: ufw
+  package:
+    state: latest
+    name: ufw
+  notify:
+    - restart_ufw
+
+# dns
+- name: ufw | dns | allow dns (tcp)
+  tags: ufw
+  ufw:
+    comment: dns
+    rule: allow
+    port: '53'
+    proto: tcp
+  when:
+    - dns_server is defined
+    - dns_server == true
+
+- name: ufw | dns | allow dns (udp)
+  tags: ufw
+  ufw:
+    comment: dns
+    rule: allow
+    port: '53'
+    proto: udp
+  when:
+    - dns_server is defined
+    - dns_server == true
+
+# k8s
+- name: ufw | k8s | allow api server (master)
+  tags: ufw
+  ufw:
+    comment: k8s master api server
+    rule: allow
+    port: '6443'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow etcd server client api (master)
+  tags: ufw
+  ufw:
+    comment: k8s master etcd server client api
+    rule: allow
+    port: 2379:2380
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow kubelet api server (master)
+  tags: ufw
+  ufw:
+    comment: k8s master kubelet api server
+    rule: allow
+    port: '10250'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow scheduler (master)
+  tags: ufw
+  ufw:
+    comment: k8s master scheduler
+    rule: allow
+    port: '10251'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow controller manager (master)
+  tags: ufw
+  ufw:
+    comment: k8s master controller manager
+    rule: allow
+    port: '10252'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow read-only kubelet API (master)
+  tags: ufw
+  ufw:
+    comment: k8s master read-only kubelet api
+    rule: allow
+    port: '10255'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_master is defined
+    - k8s_master == true
+
+- name: ufw | k8s | allow nodeport services (master)
+  tags: ufw
+  ufw:
+    comment: k8s master read-only kubelet api
+    rule: allow
+    port: 30000:32767
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_worker is defined
+    - k8s_worker == true
+
+- name: ufw | k8s | allow kubelet API (worker)
+  tags: ufw
+  ufw:
+    comment: k8s worker read-only kubelet api
+    rule: allow
+    port: '10250'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_worker is defined
+    - k8s_worker == true
+
+- name: ufw | k8s | allow kubernetes read-only kubelet API (worker)
+  tags: ufw
+  ufw:
+    comment: k8s worker read-only kubelet api
+    rule: allow
+    port: '10255'
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_worker is defined
+    - k8s_worker == true
+
+- name: ufw | k8s | allow kubernetes nodeport services (worker)
+  tags: ufw
+  ufw:
+    comment: k8s worker read-only kubelet api
+    rule: allow
+    port: 30000:32767
+    proto: tcp
+    src: 172.16.249.0/24
+  when:
+    - k8s_worker is defined
+    - k8s_worker == true
+
+
+# minecraft
+- name: ufw | minecraft | allow server
+  tags: ufw
+  ufw:
+    comment: minecraft
+    rule: allow
+    port: '25565'
+    proto: tcp
+  when:
+    - minecraft_server is defined
+    - minecraft_server == true
+
+
+# nrpe
+- name: ufw | nrpe | allow nrpe from utility server (internal)
+  tags: ufw
+  ufw:
+    comment: nrpe
+    rule: allow
+    port: '5666'
+    src: 172.16.249.9/32
+  when:
+    - proxmox_instance is defined and proxmox_instance == true or
+      raspberry_pi is defined and raspberry_pi == true
+
+- name: ufw | nrpe | allow nrpe (external)
+  tags: ufw
+  ufw:
+    comment: nrpe
+    rule: allow
+    port: '5666'
+    src: 172.14.56.123/32
+  when:
+    - linode_instance is defined
+    - linode_instance == true
+
+# openssh
+- name: ufw | openssh | allow ssh (external)
+  tags: ufw
+  ufw:
+    comment: ssh from home network
+    rule: allow
+    port: ssh
+    src: 172.14.59.123/32
+  when:
+    - linode_instance is defined
+    - linode_instance == true
+
+- name: ufw | openssh | allow ssh (internal)
+  tags: ufw
+  ufw:
+    comment: ssh
+    rule: allow
+    port: ssh
+    src: '{{ item }}'
+  loop:
+    - 10.10.10.10/24
+    - 172.16.248.0/24
+    - 172.16.249.0/24
+    - 172.16.250.0/24
+    - 172.16.251.0/24
+  when:
+    - linode_instance is defined
+    - linode_instance == false
+
+# plex
+- name: ufw | plex | allow plex
+  tags: ufw
+  ufw:
+    comment: plex
+    rule: allow
+    port: '32400'
+    proto: tcp
+  when:
+    - plex_server is defined
+    - plex_server == true
+
+# unifi
+- name: ufw | unifi | allow device discovery
+  tags: ufw
+  ufw:
+    comment: unifi controller device discovery
+    rule: allow
+    port: '10001'
+    proto: udp
+    src: 172.16.248.0/24
+  when:
+    - unifi_controller is defined
+    - unifi_controller == true
+
+- name: ufw | unifi | allow http
+  tags: ufw
+  ufw:
+    comment: unifi controller http
+    rule: allow
+    port: '8080'
+    proto: tcp
+    src: 172.16.248.0/24
+  when:
+    - unifi_controller is defined
+    - unifi_controller == true
+
+- name: ufw | unifi | allow https
+  tags: ufw
+  ufw:
+    comment: unifi controller https
+    rule: allow
+    port: '8443'
+    proto: tcp
+    src: 172.16.248.0/24
+  when:
+    - unifi_controller is defined
+    - unifi_controller == true
+
+- name: ufw | unifi | allow speed test
+  tags: ufw
+  ufw:
+    comment: unifi controller speed test
+    rule: allow
+    port: '6789'
+    proto: tcp
+    src: 172.16.248.0/24
+  when:
+    - unifi_controller is defined
+    - unifi_controller == true
+
+- name: ufw | unifi | allow stun
+  tags: ufw
+  ufw:
+    comment: unifi controller stun
+    rule: allow
+    port: '3478'
+    proto: udp
+    src: 172.16.248.0/24
+  when:
+    - unifi_controller is defined
+    - unifi_controller == true
+
+# web server
+- name: ufw | web server | allow http (80)
+  tags: ufw
+  ufw:
+    comment: http
+    rule: allow
+    port: '80'
+    proto: tcp
+  when:
+    - web_server is defined
+    - web_server == true
+
+- name: ufw | web server | allow http (8080)
+  tags: ufw
+  ufw:
+    comment: http_8080
+    rule: allow
+    port: '8080'
+    proto: tcp
+  when:
+    - web_server_8080 is defined
+    - web_server_8080 == true
+
+- name: ufw | web server | allow https
+  tags: ufw
+  ufw:
+    comment: https
+    rule: allow
+    port: '443'
+    proto: tcp
+  when:
+    - web_server is defined
+    - web_server == true
+
+# all rules set, enable
+- name: ufw | enable firewall
+  ufw:
+    state: enabled

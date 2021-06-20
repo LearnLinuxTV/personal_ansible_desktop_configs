@@ -1,0 +1,219 @@
+- name: mate | keybindings | set primary browser keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom0/name", value: "'browser'" }
+    - { key: "/org/mate/desktop/keybindings/custom0/binding", value: "'<Mod4>b'" }
+    - { key: "/org/mate/desktop/keybindings/custom0/action", value: "'{{ web_browser }}'" }
+  when: web_browser is defined
+
+- name: mate | keybindings | set primary browser keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom0/name", value: "'browser'" }
+    - { key: "/org/mate/desktop/keybindings/custom0/binding", value: "'<Mod4>b'" }
+    - { key: "/org/mate/desktop/keybindings/custom0/action", value: "'{{ firefox }}'" }
+  when: web_browser is not defined
+
+- name: mate | keybindings | set browser keybinding (alternate)
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom1/name", value: "'browser-alt'" }
+    - { key: "/org/mate/desktop/keybindings/custom1/binding", value: "'<Shift><Mod4>b'" }
+    - { key: "/org/mate/desktop/keybindings/custom1/action", value: "'/usr/bin/google-chrome'" }
+
+- name: mate | keybindings | set file manager keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom2/name", value: "'file manager'" }
+    - { key: "/org/mate/desktop/keybindings/custom2/binding", value: "'<Mod4>f'" }
+    - { key: "/org/mate/desktop/keybindings/custom2/action", value: "'caja --no-desktop /home/jay'" }
+
+- name: mate | keybindings | set bpytop keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom3/name", value: "'bpytop'" }
+    - { key: "/org/mate/desktop/keybindings/custom3/binding", value: "'<Mod4>r'" }
+    - { key: "/org/mate/desktop/keybindings/custom3/action", value: "'{{ terminal_emulator }} -e bpytop'" }
+  when: terminal_emulator is defined
+
+- name: mate | keybindings | set bpytop keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom3/name", value: "'bpytop'" }
+    - { key: "/org/mate/desktop/keybindings/custom3/binding", value: "'<Mod4>r'" }
+    - { key: "/org/mate/desktop/keybindings/custom3/action", value: "'mate-terminal -e bpytop'" }
+  when: terminal_emulator is not defined
+
+- name: mate | keybindings | set keepassxc keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom4/name", value: "'keepass'" }
+    - { key: "/org/mate/desktop/keybindings/custom4/binding", value: "'<Mod4>k'" }
+    - { key: "/org/mate/desktop/keybindings/custom4/action", value: "'flatpak run org.keepassxc.KeePassXC'" }
+
+- name: gnome | set screenshot keybinding
+  tags: gnome,keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom5/name", value: "'screenshot'" }
+    - { key: "/org/mate/desktop/keybindings/custom5/binding", value: "'<Super>p'" }
+    - { key: "/org/mate/desktop/keybindings/custom5/command", value: "'mate-screenshot -w --border-effect=shadow'" }
+
+- name: gnome | set screenshot (selection) keybinding
+  tags: gnome,keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom6/name", value: "'screenshot-area'" }
+    - { key: "/org/mate/desktop/keybindings/custom6/binding", value: "'<Super>p'" }
+    - { key: "/org/mate/desktop/keybindings/custom6/command", value: "'mate-screenshot -a'" }
+
+- name: mate | keybindings | set terminal keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom7/name", value: "'terminal'" }
+    - { key: "/org/mate/desktop/keybindings/custom7/binding", value: "'<Mod4>t'" }
+    - { key: "/org/mate/desktop/keybindings/custom7/action", value: "'{{ terminal_emulator }}'" }
+  when: terminal_emulator is defined
+
+- name: mate | keybindings | set terminal keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom7/name", value: "'terminal'" }
+    - { key: "/org/mate/desktop/keybindings/custom7/binding", value: "'<Mod4>t'" }
+    - { key: "/org/mate/desktop/keybindings/custom7/action", value: "'terminator'" }
+  when: terminal_emulator is not defined
+
+- name: mate | keybindings | set text editor keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom8/name", value: "'text editor'" }
+    - { key: "/org/mate/desktop/keybindings/custom8/binding", value: "'<Mod4>e'" }
+    - { key: "/org/mate/desktop/keybindings/custom8/action", value: "'gui_editor'" }
+  when: gui_editor is defined
+
+- name: mate | keybindings | set text editor keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom8/name", value: "'text editor'" }
+    - { key: "/org/mate/desktop/keybindings/custom8/binding", value: "'<Mod4>e'" }
+    - { key: "/org/mate/desktop/keybindings/custom8/action", value: "'pluma'" }
+  when: gui_editor is not defined
+
+- name: mate | keybindings | set tmux keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom9/name", value: "'tmux'" }
+    - { key: "/org/mate/desktop/keybindings/custom9/binding", value: "'<Shift><Mod4>t'" }
+    - { key: "/org/mate/desktop/keybindings/custom9/action", value: "'{{ terminal_emulator }} -e tmux'" }
+  when: terminal_emulator is defined
+
+- name: mate | keybindings | set tmux keybinding
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/desktop/keybindings/custom9/name", value: "'tmux'" }
+    - { key: "/org/mate/desktop/keybindings/custom9/binding", value: "'<Shift><Mod4>t'" }
+    - { key: "/org/mate/desktop/keybindings/custom9/action", value: "'mate-terminal -e tmux'" }
+  when: terminal_emulator is not defined
+
+- name: mate | keybindings | set keybinding for switching between workspaces
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-left", value: "'<Primary>Left'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-right", value: "'<Primary>Right'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-1", value: "'<Primary>1'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-2", value: "'<Primary>2'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-3", value: "'<Primary>3'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-4", value: "'<Primary>4'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-5", value: "'<Primary>5'" }
+    - { key: "/org/mate/marco/global-keybindings/switch-to-workspace-6", value: "'<Primary>6'" }
+
+- name: mate | keybindings | set keybinding for moving windows to other workspaces
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/marco/window-keybindings/move-to-workspace-left", value: "'<Primary><Shift>Left'" }
+    - { key: "/org/mate/marco/window-keybindings/move-to-workspace-right", value: "'<Primary><Shift>Right'" }
+
+- name: mate | keybindings | set tiling keybindings
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
+  with_items:
+    - { key: "/org/mate/marco/window-keybindings/maximize", value: "'<Mod4>Up'" }
+    - { key: "/org/mate/marco/window-keybindings/tile-to-side-e", value: "'<Mod4>Right'" }
+    - { key: "/org/mate/marco/window-keybindings/tile-to-side-w", value: "'<Mod4>Left'" }
+    - { key: "/org/mate/marco/window-keybindings/unmaximize", value: "'<Mod4>Down'" }
+
+- name: mate | keybindings | set keybinding for locking screen
+  tags: mate,mate-keybindings
+  become_user: jay
+  dconf:
+    key: "/org/mate/settings-daemon/plugins/media-keys/screensaver"
+    value: "'<Mod4>l'"

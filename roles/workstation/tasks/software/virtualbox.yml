@@ -1,0 +1,32 @@
+# As of May 2, 2020; Virtualbox is available in backports, but is an old version.
+# The following will add the official Virtualbox repo
+
+- name: software | virtualbox | install apt key (debian)
+  tags: virtualbox,repositories,virtualbox
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+  when:
+    - ansible_distribution == "Debian"
+    - virtualbox is defined
+    - virtualbox == true
+
+- name: software | virtualbox | install repository (debian)
+  tags: virtualbox,repositories,virtualbox
+  apt_repository:
+    repo: deb https://download.virtualbox.org/virtualbox/debian buster contrib
+    state: present
+    filename: virtualbox
+  register: virtualbox_repo_debian
+  when:
+    - ansible_distribution == "Debian"
+    - virtualbox is defined
+    - virtualbox == true
+
+- name: software | virtualbox | install package
+  tags: virtualbox
+  package:
+    name: "{{ virtualbox_package }}"
+  when:
+    - virtualbox is defined
+    - virtualbox == true

@@ -1,0 +1,37 @@
+- name: software | keepassxc | install package
+  tags: packages,firefox,flatpak,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.keepassxc.KeePassXC
+    method: user
+    state: present
+
+- name: software | keepassxc | enable autostart
+  tags: packages,keepassxc,flatpak,workstation-packages
+  file:
+    src: /home/jay/.local/share/flatpak/exports/share/applications/org.keepassxc.KeePassXC.desktop
+    dest: /home/jay/.config/autostart/org.keepassxc.KeePassXC.desktop
+    owner: jay
+    group: jay
+    state: link
+
+- name: software | keepassxc | create keepassxc install directory
+  tags: packages,keepassxc,flatpak,workstation-packages
+  file:
+    path: /home/jay/.config/keepassxc
+    state: directory
+    owner: jay
+    group: jay
+    mode: 0700
+  register: keepassxc_config_dir
+  when: keepassxc is defined and keepassxc == true
+
+- name: software | keepassxc | add initial keepassxc config
+  tags: packages,keepassxc,flatpak,workstation-packages
+  copy:
+    src: users/jay/keepassxc.ini
+    dest: /home/jay/.config/keepassxc/keepassxc.ini
+    owner: jay
+    group: jay
+    mode: 0600
+  when: keepassxc is defined and keepassxc == true

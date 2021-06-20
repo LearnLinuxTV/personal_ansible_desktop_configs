@@ -1,0 +1,53 @@
+- name: ansible setup | ensure ansible is the latest version
+  tags: ansible,ansible-setup
+  package:
+    name: ansible
+    state: latest
+
+- name: ansible setup | install required packages
+  tags: ansible,ansible-setup,packages
+  package:
+    name:
+      - "{{ dconf_package }}"
+      - "{{ python_psutil_package }}"
+
+# Note: For Arch, the requirement is met by a dependency of systemd, only necessary on Debian-based
+- name: ansible setup | install acl package
+  tags: ansible,ansible-setup,packages
+  package:
+    name: acl
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: ansible setup | create ansible log file
+  tags: ansible,ansible-setup
+  file:
+    path: /var/log/ansible.log
+    owner: simone
+    group: ansible
+    mode: 0664
+    state: touch
+  changed_when: False
+
+- name: ansible setup | add logrotate config for ansible log file
+  tags: ansible-setup
+  copy:
+    src: files/ansible_setup/logrotate
+    dest: /etc/logrotate.d/ansible
+    owner: root
+    group: root
+    mode: 0644
+
+- name: ansible setup | remove default ansible directory (/etc/ansible) from host
+  tags: ansible,ansible-setup
+  file:
+    path: /etc/ansible
+    state: absent
+
+- name: ansible setup | generate provision script from template
+  tags: ansible,ansible-setup,scripts
+  template:
+    src: provision.sh.j2
+    dest: /usr/local/bin/provision
+    owner: root
+    group: root
+    mode: 0755

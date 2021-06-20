@@ -1,0 +1,34 @@
+#- name: mate | appearance | show correct icon in launcher
+   #become_user: jay
+   #dconf:
+     #key: "/org/mate/panel/menubar/icon-name"
+     #value: "'mate'"
+
+#- name: mate | appearance | set icon theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/mate/desktop/interface/icon-theme"
+#    value: "'Ambiant-MATE'"
+
+#- name: mate | appearance | set gtk theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/mate/desktop/interface/gtk-theme"
+#    value: "'Ambiant-MATE'"
+
+#- name: mate | appearance | set marco theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/mate/marco/general/theme"
+#    value: "'Ambiant-MATE-Dark'"
+
+- name: mate | appearance | set wallpaper
+  tags: mate,mate-wallpaper
+  become_user: jay
+  dconf: key="/org/mate/desktop/background/{{ item.key }}" value={{ item.value}}
+  with_items:
+    - { key: "color-shading-type", value: "'vertical-gradient'" }
+    - { key: "picture-filename", value: "'/usr/share/backgrounds/cosmos/background-1.xml'" }
+    - { key: "picture-options", value: "'zoom'" }
+    - { key: "primary-color", value: "'rgb(88,145,188)'" }
+    - { key: "secondary-color", value: "'rgb(60,143,37)'" }

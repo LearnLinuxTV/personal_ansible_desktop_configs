@@ -1,0 +1,8 @@
+[DEFAULT]
+default-user = linode-user
+
+[reg4]
+token = super-secret-token-id
+region = ca-central
+type = g6-nanode-1
+image = linode/ubuntu20.04

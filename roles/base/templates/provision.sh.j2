@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# options
+ANSIBLEUSER="<ansible-user-name>"
+BRANCH="{{ branch | default('master') }}"
+LOGFILE="/var/log/ansible.log"
+REPO="<https://url-to-git-server/ansible.git>"
+VAULT_KEY="</path/to/ansible_vault_key">
+PRECMD="sudo systemd-inhibit --who='ansible-pull' --why='provisioning'"
+
+# check if ansible-pull is already running, and if not, run it
+if pgrep -f ansible-pull; then
+    printf "\n$(date +"%Y-%m-%d %H:%M:%S") A running ansible-pull process was found.\nExiting.\n"\
+        |tee -a $LOGFILE
+    exit 1
+else
+    if [ ! $1 == "" ]; then
+        $PRECMD sudo -iH -u $ANSIBLEUSER ansible-pull --vault-password-file=$VAULT_KEY -U $REPO -C $BRANCH --tags $1 2>&1
+    else
+        $PRECMD sudo -iH -u $ANSIBLEUSER ansible-pull --vault-password-file=$VAULT_KEY -o -U $REPO -C $BRANCH 2>&1
+    fi
+fi

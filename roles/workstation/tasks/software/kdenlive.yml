@@ -1,0 +1,16 @@
+- name: software | kdenlive | copy launcher
+  tags: apps,appimage,software,kdenlive
+  copy:
+    src: users/jay/kdenlive.desktop
+    dest: /home/jay/.local/share/applications/kdenlive.desktop
+    owner: jay
+    group: jay
+    mode: 0700
+
+- name: software | kdenlive | install package
+  get_url:
+    url: https://download.kde.org/stable/kdenlive/20.08/linux/kdenlive-20.08.2-x86_64.appimage
+    dest: /home/jay/bin/kdenlive.app
+    mode: '0700'
+    owner: jay
+    group: jay

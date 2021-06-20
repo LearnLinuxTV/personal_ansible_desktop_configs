@@ -1,0 +1,7 @@
+- name: software | openshot | install package
+  get_url:
+    url: https://github.com/OpenShot/openshot-qt/releases/download/v2.5.1/OpenShot-v2.5.1-x86_64.AppImage
+    dest: /home/jay/bin/openshot.app
+    mode: '0700'
+    owner: jay
+    group: jay

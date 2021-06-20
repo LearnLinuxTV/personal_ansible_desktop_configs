@@ -1,0 +1,63 @@
+- name: gnome | appearance | copy wallpaper file
+  tags: gnome,gnome-wallpaper
+  copy:
+    src: gnome/wallpaper.png
+    dest: /usr/share/backgrounds/jay-wallpaper.png
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set wallpaper
+  tags: gnome,gnome-wallpaper
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///usr/share/backgrounds/jay-wallpaper.png'"
+
+- name: gnome | appearance | set wallpaper position
+  tags: gnome,gnome-wallpaper
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'zoom'"
+
+- name: gnome | appearance | copy lock screen background file
+  tags: gnome,gnome-lockscreen
+  copy:
+    src: files/gnome/lockscreen.jpg
+    dest: /usr/share/backgrounds/jay-lockscreen.jpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set lock screen background
+  tags: gnome,gnome-lockscreen
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-uri"
+    value: "'file:///usr/share/backgrounds/jay-lockscreen.jpg'"
+
+- name: gnome | appearance | set lock screen background position
+  tags: gnome,gnome-lockscreen
+  become_user: jay
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-options"
+    value: "'zoom'"
+
+#- name: gnome | appearance | gnome | appearance | set icon theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/gnome/desktop/interface/icon-theme"
+#    value: "'Moka-Minimal'"
+
+#- name: gnome | appearance | set GTK theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/gnome/desktop/interface/gtk-theme"
+#    value: "'Shades-of-gray'"
+
+#- name: gnome | appearance | set shell theme
+#  become_user: jay
+#  dconf:
+#    key: "/org/gnome/shell/extensions/user-theme/name"
+#    value: "'Shades-of-gray'"

@@ -1,0 +1,32 @@
+- name: software | ulauncher | install ppa
+  tags: ulauncher
+  apt_repository:
+    repo: 'ppa:agornostal/ulauncher'
+    state: present
+  when:
+    - ansible_distribution in ["Pop!_OS", "Ubuntu"]
+    - ulauncher is defined
+    - ulauncher == true
+
+- name: software | ulauncher | install package
+  tags: ulauncher
+  apt:
+    name: ulauncher
+    state: latest
+  when:
+    - ansible_distribution in ["Pop!_OS", "Ubuntu"]
+    - ulauncher is defined
+    - ulauncher == true
+
+- name: software | ulauncher | enable autostart
+  tags: ulauncher
+  copy:
+    src: users/jay/ulauncher.desktop
+    dest: /home/jay/.config/autostart/ulauncher.desktop
+    owner: jay
+    group: jay
+    mode: 0600
+  when:
+    - ansible_distribution in ["Pop!_OS", "Ubuntu"]
+    - ulauncher is defined
+    - ulauncher == true

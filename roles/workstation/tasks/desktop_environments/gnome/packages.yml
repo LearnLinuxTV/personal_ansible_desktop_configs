@@ -1,0 +1,50 @@
+# Note: Some of these packages are disabled, they depend on tracker which is currently being disabled
+- name: gnome | packages | install gnome packages
+  tags: gnome,gnome-packages
+  package:
+    name:
+      - eog
+      - file-roller
+      - "{{ gdm_package }}"
+      - gedit
+      - gnome-backgrounds
+      - gnome-books
+      - gnome-boxes
+      - gnome-control-center
+      - gnome-disk-utility
+#      - gnome-documents
+      - gnome-icon-theme
+#      - gnome-music
+#      - gnome-photos
+      - gnome-power-manager
+      - gnome-remote-desktop
+      - gnome-shell
+      - gnome-shell-extensions
+      - gnome-system-monitor
+      - gnome-terminal
+      - gnome-todo
+      - gnome-tweaks
+      - nautilus
+
+- name: gnome | packages | install flatpak support in gnome software
+  tags: gnome,gnome-packages
+  package:
+    name:
+    - gnome-software-plugin-flatpak
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+
+# It appears as though Debian and Ubuntu place GNOME support for openvpn in a separate package
+# This doesn't seem to be required in archlinux.
+- name: gnome | packages | install gnome support for network-manager for debian and ubuntu hosts
+  tags: gnome,gnome-packages,packages
+  package:
+    name:
+      - network-manager-openvpn-gnome
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: gnome | packages | enable and start gdm
+  tags: autofs,system,system setup
+  service:
+    name: gdm
+    enabled: true
+    state: started

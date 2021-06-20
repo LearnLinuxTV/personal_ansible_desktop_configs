@@ -1,0 +1,40 @@
+# Settings
+allowed_hosts={{ nrpe_allowed_hosts }}
+command_timeout=60
+connection_timeout=300
+debug=0
+dont_blame_nrpe=0
+listen_queue_size=5
+log_facility=daemon
+log_file={{ nrpe_log_file }}
+max_commands=0
+nrpe_group={{ nrpe_group }}
+nrpe_user={{ nrpe_user }}
+pid_file={{ nrpe_pid_file }}
+server_port=5666
+
+# Command Definitions
+command[check_disk_home]={{ monitoring_plugins_path }}/check_disk -w 10% -c 5% -p /home
+command[check_disk_root]={{ monitoring_plugins_path }}/check_disk -w 10% -c 5% -p /
+command[check_load]={{ monitoring_plugins_path }}/check_load -w 4 -c 10
+command[check_load_minecraft]={{ monitoring_plugins_path }}/check_load -w 6 -c 10
+command[check_load_plex]={{ monitoring_plugins_path }}/check_load -w 6 -c 10
+command[check_load_vm-host]={{ monitoring_plugins_path }}/check_load -w 10 -c 20
+command[check_md_raid]={{ monitoring_plugins_path }}/check_md_raid
+command[check_mem]={{ monitoring_plugins_path }}/check_mem -w 10 -c 5 -d G -f
+command[check_nfs]={{ monitoring_plugins_path }}/check_nfs
+command[check_sensors]={{ monitoring_plugins_path }}/check_sensors
+command[check_ssh_pfsense]={{ monitoring_plugins_path }}/check_ssh -p 65001 localhost
+command[check_ssl_alansreptiles.com]={{ monitoring_plugins_path }}/check_http -H alansreptiles.com --ssl --sni -C 20,10
+command[check_ssl_community.learnlinux.tv]={{ monitoring_plugins_path }}/check_http -H community.learnlinux.tv --ssl --sni -C 20,10
+command[check_ssl_jaylacroix.com]={{ monitoring_plugins_path }}/check_http -H jaylacroix.com --ssl --sni -C 20,10
+command[check_ssl_learnlinux.link]={{ monitoring_plugins_path }}/check_http -H learnlinux.link --ssl --sni -C 20,10
+command[check_ssl_learnlinux.tv]={{ monitoring_plugins_path }}/check_http -H learnlinux.tv --ssl --sni -C 20,10
+command[check_ssl_meet.learnlinux.tv]={{ monitoring_plugins_path }}/check_http -H meet.learnlinux.tv --ssl --sni -C 20,10
+command[check_ssl_rss.home-network.io]={{ monitoring_plugins_path }}/check_http -H rss.home-network.io --ssl --sni -C 20,10
+command[check_ssl_wiki.learnlinux.tv]={{ monitoring_plugins_path }}/check_http -H wiki.learnlinux.tv --ssl --sni -C 20,10
+command[check_swap]={{ monitoring_plugins_path }}/check_swap -w 50% -c 10%
+command[check_total_procs]={{ monitoring_plugins_path }}/check_procs -w 150 -c 200
+command[check_users]={{ monitoring_plugins_path }}/check_users -w 2 -c 3
+command[check_users_pfsense]={{ monitoring_plugins_path }}/check_users -w 3 -c 4
+command[check_zombie_procs]={{ monitoring_plugins_path }}/check_procs -w 5 -c 10 -s Z

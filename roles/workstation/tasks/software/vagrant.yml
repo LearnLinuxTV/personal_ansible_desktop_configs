@@ -1,0 +1,11 @@
+- name: software | vagrant | install binary
+  unarchive:
+    src: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+  when:
+    - vagrant is defined
+    - vagrant == true

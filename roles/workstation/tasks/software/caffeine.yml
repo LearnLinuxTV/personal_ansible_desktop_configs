@@ -1,0 +1,6 @@
+# Arch isn't packaging caffeine for some stupid reason.
+- name: software | install caffeine
+  tags: packages,workstation-packages,caffeine
+  package:
+    name: caffeine
+  when: ansible_distribution != "Archlinux"

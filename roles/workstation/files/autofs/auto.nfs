@@ -1,0 +1,5 @@
+/mnt/truenas/archive -fstype=nfs4,soft,intr,rsize=8192,wsize=8192 storage.home-network.io:/mnt/volume1/archive
+/mnt/truenas/backup -fstype=nfs4,soft,intr,rsize=8192,wsize=8192 storage.home-network.io:/mnt/volume1/backup
+/mnt/truenas/home -fstype=nfs4,soft,intr,rsize=8192,wsize=8192 storage.home-network.io:/mnt/volume1/home/jay
+/mnt/truenas/media -fstype=nfs4,soft,intr,rsize=8192,wsize=8192 storage.home-network.io:/mnt/volume1/media
+/mnt/truenas/youtube -fstype=nfs4,soft,intr,rsize=8192,wsize=8192 storage.home-network.io:/mnt/volume1/youtube

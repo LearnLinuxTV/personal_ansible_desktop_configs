@@ -1,0 +1,15 @@
+# KDE Config File
+[Desktop Entry]
+Name=Kdenlive
+GenericName=Video Editor
+Comment=Nonlinear video editor by KDE
+Type=Application
+Exec=/home/jay/bin/kdenlive.app %F
+Icon=kdenlive
+X-DocPath=kdenlive/index.html
+X-DocPath[cs]=http://cs.wikibooks.org/wiki/Kdenlive
+Terminal=false
+MimeType=application/x-kdenlive;
+Categories=Qt;KDE;AudioVideo;AudioVideoEditing;
+Keywords=video;audio;firewire;video4linux;suite;editing;kde;mlt;
+X-DBUS-ServiceName=org.kde.kdenlive

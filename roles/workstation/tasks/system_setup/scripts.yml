@@ -1,0 +1,17 @@
+- name: system setup | scripts | copy cht.sh script
+  tags: distro-setup
+  copy:
+    src: scripts/cht.sh
+    dest: /usr/local/bin/cht.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: system setup | scripts | copy pishrink.sh script
+  tags: distro-setup
+  copy:
+    src: scripts/pishrink.sh
+    dest: /usr/local/bin/pishrink.sh
+    owner: root
+    group: root
+    mode: 0755

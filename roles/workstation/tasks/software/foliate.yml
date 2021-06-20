@@ -1,0 +1,8 @@
+- name: software | foliate | install package
+  tags: packages,flatpak,foliate,workstation-packages
+  become_user: jay
+  flatpak:
+    name: com.github.johnfactotum.Foliate
+    method: user
+    state: present
+  when: foliate is defined and foliate == true

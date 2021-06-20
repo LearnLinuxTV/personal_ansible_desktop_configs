@@ -1,0 +1,22 @@
+---
+- name: apt_update
+  apt: update_cache=yes
+
+- name: restart_sshd
+  service:
+    name: "{{ openssh_service }}"
+    state: restarted
+
+- name: update_tmux_plugin_perms
+  file:
+    path: /home/jay/.tmux/plugins
+    owner: jay
+    group: jay
+    recurse: true
+
+- name: update_vim_bundle_perms
+  file:
+    path: /home/jay/.vim/bundle
+    owner: jay
+    group: jay
+    recurse: true

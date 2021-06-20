@@ -1,0 +1,180 @@
+" Disable annoying beep sound
+set vb
+
+" Set color scheme. Other good ones are bubblegum-256-dark, sorcerer, and zenburn
+colorscheme xoria256
+
+" ansible-vim: set indent to 0 after two newlines in insert-mode
+let g:ansible_unindent_after_newline = 1
+
+" ansible-vim settings
+let g:ansible_attribute_highlight = "od"
+let g:ansible_name_highlight = 'b'
+let g:ansible_extra_keywords_highlight = 1
+let g:ansible_normal_keywords_highlight = 'Constant'
+let g:ansible_with_keywords_highlight = 'Constant'
+
+" CtrlP Shortcuts
+noremap <leader>b :CtrlPBuffer<CR>
+noremap <leader>p :CtrlP<CR>
+noremap <leader>P :CtrlPClearCache<CR>:CtrlP<CR>
+
+noremap <c-b> :LeaderfBuffer<CR>
+noremap <c-f> :LeaderfFile<CR>
+
+" NERDTree Shortcuts
+silent! map <F2> :NERDTreeToggle<CR>
+silent! map <F3> :NERDTreeFind<CR>
+
+" Switch buffers using F4
+nnoremap <F4> :buffers<CR>:buffer<Space>
+
+" Refresh vim config with F5
+noremap <silent> <F5> :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" Switch buffers using ctrl+left or ctrl+right
+map <C-left> <ESC>:bp<CR>
+map <C-right> <ESC>:bn<CR>
+
+" Set keyboard shortcut for paste toggle.
+set pastetoggle=<F10>
+
+" Move between windows easily
+noremap <leader><up> :wincmd k<CR>
+noremap <leader><down> :wincmd j<CR>
+noremap <leader><left> :wincmd h<CR>
+noremap <leader><right> :wincmd l<CR>
+noremap <leader>k :wincmd k<CR>
+noremap <leader>j :wincmd j<CR>
+noremap <leader>h :wincmd h<CR>
+noremap <leader>l :wincmd l<CR>
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Clear search highlight with c-l
+noremap <silent> <c-l> :nohls<cr><c-l>
+
+" Fix tmux background color
+if &term =~ '256color'
+    set t_ut=
+endif
+
+" Show line numbers
+set number
+
+" Enable filetype plugins
+filetype plugin indent on
+
+" Enable syntax highlighting
+syntax on
+
+" Turn backup off
+set nobackup
+set nowb
+set noswapfile
+
+" this turns off physical line wrapping (ie: automatic insertion of newlines)
+set textwidth=0 wrapmargin=0
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Ignore case while searching
+set ignorecase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+" Return to the last edit position when opening files.
+augroup vimrcEx
+    autocmd!
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+augroup END
+
+" Ensure cursor is at the top of the file, if editing a git commit message:
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+" in case you forgot to sudo
+cnoremap w!! %!sudo tee > /dev/null %
+
+" Set the cursorline
+set cursorline
+
+"hi cursorline gui=none
+augroup CursorlineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
+
+" Highlight trailing whitespace in red
+match ErrorMsg /\s\+\%#\@<!$/
+
+" Enable pathogen
+execute pathogen#infect()
+
+" Syntastic
+let g:syntastic_python_checkers = ['flake8', 'pyflakes']
+" Disable E501(over 79 chars), W191(tabs instead of space), W391(blank line at
+" end of file
+let g:syntastic_python_flake8_args='--ignore=E501'
+
+" Enable checking of perl files.
+let g:syntastic_perl_checkers = ['perl']
+let g:syntastic_enable_perl_checker = 1
+
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_enable_highlighting=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_loc_list_height=5
+
+let g:syntastic_mode_map = { 'mode': 'active',
+        \ 'active_filetypes': ['python', 'javascript', 'css', 'html'],
+        \ 'passive_filetypes': ['make','cpp','c'] }
+
+" Jedi stuff
+let g:jedi#use_tabs_not_buffers = 0

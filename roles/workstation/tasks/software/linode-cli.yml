@@ -1,0 +1,7 @@
+- name: software | linode-cli | install package
+  tags: packages,linode,pip,python
+  become_user: jay
+  pip:
+    executable: /usr/bin/pip3
+    state: latest
+    name: linode-cli

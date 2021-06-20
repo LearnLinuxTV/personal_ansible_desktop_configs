@@ -1,0 +1,108 @@
+# Current PS1:
+tty -s && export PS1="[\[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\h:\W]\\$ \[$(tput sgr0)\]"
+
+# Env
+export TERM=xterm-256color
+export EDITOR=vim
+
+# Don't add duplicate lines or lines beginning with a space to the history
+HISTCONTROL=ignoreboth
+
+# Set history format to include timestamps
+HISTTIMEFORMAT="%Y-%m-%d %T "
+
+# Command aliases
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias back='cd $OLDPWD'
+alias c='clear'
+alias cd..='cd ..'
+alias diff='colordiff'
+alias e="vim -O "
+alias E="vim -o "
+alias extip='curl icanhazip.com'
+alias grep='grep --color=auto'
+alias l.='ls -lhFa --time-style=long-iso --color=auto'
+alias ll='ls'
+alias ls='ls -lhF --time-style=long-iso --color=auto'
+alias lsmount='mount |column -t'
+alias mkdir='mkdir -pv'
+alias ports='netstat -tulanp'
+alias h='history'
+alias j='jobs -l'
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+alias ssha='eval $(ssh-agent) && ssh-add'
+alias svim='sudo vim'
+alias tn='tmux new -s'
+alias wget='wget -c'
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+# Safetynets
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# reload bash config
+alias reload="source ~/.bashrc"
+
+# package management
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
+alias install='sudo apt-get install'
+
+## Functions
+
+# Make a directory, then go there
+md() {
+    test -n "$1" || return
+    mkdir -p "$1" && cd "$1"
+}
+
+# "path" shows current path, one element per line.
+# If an argument is supplied, grep for it.
+path() {
+    test -n "$1" && {
+        echo $PATH | perl -p -e "s/:/\n/g;" | grep -i "$1"
+    } || {
+        echo $PATH | perl -p -e "s/:/\n/g;"
+    }
+}
+
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjvf $1    ;;
+      *.tar.gz)    tar xzvf $1    ;;
+      *.bz2)       bzip2 -d $1    ;;
+      *.rar)       unrar2dir $1    ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1    ;;
+      *.tgz)       tar xzf $1    ;;
+      *.zip)       unzip2dir $1     ;;
+      *.Z)         uncompress $1    ;;
+      *.7z)        7z x $1    ;;
+      *.ace)       unace x $1    ;;
+      *)           echo "'$1' cannot be extracted via extract()"   ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}

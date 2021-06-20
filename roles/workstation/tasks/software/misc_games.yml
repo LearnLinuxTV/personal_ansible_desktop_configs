@@ -1,0 +1,13 @@
+- name: software | install misc game packages
+  tags: gaming
+  package:
+    name:
+      - chromium-bsu
+      - extremetuxracer
+      - frozen-bubble
+      - gnome-chess
+      - "{{ nethack_package }}"
+      - supertux
+      - supertuxkart
+      - wesnoth
+  when: games is defined and games == true

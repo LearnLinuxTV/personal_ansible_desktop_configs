@@ -1,0 +1,16 @@
+- name: users | simone | add public key
+  tags: dotfiles,simone,ssh,ssh-keys,users
+  authorized_key:
+    user: simone
+    key: "{{ item }}"
+  with_file:
+    - users/simone/ssh/simone_id_ed25519.pub
+
+- name: users | simone | add sudoers file
+  tags: settings,simone,sudo,system,users
+  copy:
+    src: users/sudoers_simone
+    dest: /etc/sudoers.d/simone
+    owner: root
+    group: root
+    mode: 0440

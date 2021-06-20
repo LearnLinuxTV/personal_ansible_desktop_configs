@@ -1,0 +1,8 @@
+- name: software | audacity | install package
+  tags: packages,flatpak,audacity,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.audacityteam.Audacity
+    method: user
+    state: present
+  when: audacity is defined and audacity == true

@@ -1,0 +1,8 @@
+- name: software | spotify | install package
+  tags: packages,flatpak,spotify,workstation-packages
+  become_user: jay
+  flatpak:
+    name: com.spotify.Client
+    method: user
+    state: present
+  when: spotify is defined and spotify == true

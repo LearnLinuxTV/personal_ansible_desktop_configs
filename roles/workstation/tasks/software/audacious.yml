@@ -1,0 +1,8 @@
+- name: software | audacious | install package
+  tags: packages,flatpak,audacious,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.atheme.audacious
+    method: user
+    state: present
+  when: audacious is defined and audacious == true

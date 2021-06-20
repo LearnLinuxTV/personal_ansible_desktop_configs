@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+## FILE: check_nfs.sh
+##
+## DESCRIPTION: This is a nagios compatible script to checks NFS mounts against what
+## 							should be mounted in /etc/fstab and if there is a stale mount.
+##
+## AUTHOR: Dennis Ruzeski (denniruz@gmail.com)
+##
+## Creation Date: 1/23/2013
+##
+## Last Modified: 1/25/2013
+##
+## VERSION: 1.0
+##
+## USAGE: ./check_nfs.sh
+##        This version takes no arguments
+##
+## TODO: Improve the check for stale mounts, add command line arguments to provide the ability to
+## 			 check mount statut, stale mounts, and latency separately.
+#
+declare -a nfs_mounts=( $(grep -v ^\# /etc/fstab |grep nfs |awk '{print $2}') )
+declare -a MNT_STATUS
+declare -a SFH_STATUS
+for mount_type in ${nfs_mounts[@]} ; do
+	if [ $(stat -f -c '%T' ${mount_type}) = nfs ]; then
+		read -t3 < <(stat -t ${mount_type})
+			if [ $? -ne 0 ]; then
+			SFH_STATUS=("${SFH_STATUS[@]}" "ERROR: ${mount_type} might be stale.")
+			else
+			MNT_STATUS=("${MNT_STATUS[@]}" "OK: ${mount_type} is ok.")
+			fi
+		else
+		MNT_STATUS=("${MNT_STATUS[@]}" "ERROR: ${mount_type} is not properly mounted.")
+fi
+done
+echo ${MNT_STATUS[@]} ${SFH_STATUS[@]} |grep -q ERROR
+	if [ $? -eq 0 ]; then
+		RETVAL=2
+        echo "CRITICAL - NFS mounts may be stale or unavailable"
+	else
+		RETVAL=0
+        echo "OK - NFS mounts are not reporting any errors"
+	fi
+unset -v MNT_STATUS
+unset -v SFH_STATUS
+exit ${RETVAL}
+

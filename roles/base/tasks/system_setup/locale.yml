@@ -1,0 +1,24 @@
+- name: system setup | locale | add en_US
+  tags: locale,system,setup
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: system setup | locale | set locale to en_US
+  tags: locale,system,setup
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+  register: locale
+
+- name: system setup | locale | set en_US as default locale
+  tags: locale,system,setup
+  command: localectl set-locale LANG=en_US.UTF-8
+  when: locale.changed
+
+- name: system setup | locale | remove en_GB
+  tags: locale,system,setup
+  locale_gen:
+    name: en_GB.UTF-8
+    state: absent
+  when: locale.changed

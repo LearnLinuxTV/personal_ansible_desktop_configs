@@ -1,0 +1,20 @@
+# As of 2020-06-18, lutris is not available on debian
+- name: software | lutris | install ppa
+  tags: gaming,lutris
+  apt_repository:
+    repo: 'ppa:lutris-team/lutris'
+    state: present
+  when:
+    - ansible_distribution in ["Pop!_OS", "Ubuntu"]
+    - lutris is defined
+    - lutris == true
+
+- name: software | lutris | install package
+  tags: gaming,lutris
+  package:
+    state: latest
+    name: lutris
+  when:
+    - ansible_distribution in ["Archlinux", "Pop!_OS", "Ubuntu"]
+    - lutris is defined
+    - lutris == true

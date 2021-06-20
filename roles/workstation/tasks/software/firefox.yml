@@ -1,0 +1,8 @@
+- name: software | firefox | install package
+  tags: packages,firefox,flatpak,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.mozilla.firefox
+    method: user
+    state: present
+  when: firefox is defined and firefox == true

@@ -1,0 +1,8 @@
+- name: software | darktable | install package
+  tags: packages,flatpak,darktable,workstation-packages
+  become_user: jay
+  flatpak:
+    name: org.darktable.Darktable
+    method: user
+    state: present
+  when: darktable is defined and darktable == true

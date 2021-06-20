@@ -1,0 +1,11 @@
+source ~/.zsh/aliases.zsh
+source ~/.zsh/bindkey.zsh
+source ~/.zsh/completion.zsh
+source ~/.zsh/exports.zsh
+source ~/.zsh/functions.zsh
+source ~/.zsh/history.zsh
+source ~/.zsh/path.zsh
+source ~/.zsh/plugins.zsh
+source ~/.zsh/prompt.zsh
+source ~/.zsh/setopt.zsh
+source ~/.zsh/theming.zsh

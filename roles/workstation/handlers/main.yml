@@ -1,0 +1,39 @@
+---
+- name: restart_autofs
+  tags: autofs,system,system setup
+  service:
+    name: autofs
+    state: restarted
+
+- name: restart_earlyoom
+  tags: earlyoom,system,system setup,tweaks
+  service:
+    name: earlyoom
+    state: restarted
+
+# Restart syncthing
+# Note: Not using systemd module because it triggers a dbus error due to no session while user is not logged in
+- name: restart_syncthing
+  tags: packages,syncthing
+  command: systemctl restart syncthing@jay
+
+- name: update_xdg
+  tags: users,config,xdg
+  become_user: jay
+  command: /usr/bin/xdg-user-dirs-update
+
+# GNOME stuff
+- name: gnome_tracker_clean_cache
+  tags: gnome,tracker
+  file:
+    path: /home/jay/.cache/tracker
+    state: absent
+
+- name: gnome_tracker_clean_local_cache
+  tags: gnome,tracker
+  file:
+    path: /home/jay/.local/share/tracker
+    state: absent
+
+- name: enable_gnome_extensions
+  include_tasks: handlers/enable_gnome_extensions.yml

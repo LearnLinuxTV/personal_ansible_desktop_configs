@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Syncthing GTK
+GenericName=Syncthing GTK
+Comment=GUI for Syncthing
+Exec=syncthing-gtk
+Type=Application
+Icon=syncthing-gtk
+Categories=Network;

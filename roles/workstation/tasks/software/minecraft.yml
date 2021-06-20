@@ -1,0 +1,8 @@
+- name: software | minecraft | install package
+  tags: packages,flatpak,games,minecraft,workstation-packages
+  become_user: jay
+  flatpak:
+    name: com.mojang.Minecraft
+    method: user
+    state: present
+  when: minecraft is defined and minecraft == true

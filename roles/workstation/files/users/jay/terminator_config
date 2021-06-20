@@ -1,0 +1,48 @@
+[global_config]
+  tab_position = bottom
+  title_use_system_font = False
+  title_font = Fira Mono 12
+[keybindings]
+  go_up = None
+  go_down = None
+  go_left = None
+  go_right = None
+  resize_left = None
+  resize_right = None
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
+  switch_to_tab_10 = <Alt>0
+  hide_window = None
+  edit_tab_title = None
+[profiles]
+  [[default]]
+    background_color = "#300a24"
+    background_darkness = 0.95
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Monospace 14
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
+    use_theme_colors = True
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      size = 1000, 450
+      type = Window
+[plugins]

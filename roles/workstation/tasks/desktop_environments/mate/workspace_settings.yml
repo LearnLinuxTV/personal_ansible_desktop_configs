@@ -1,0 +1,20 @@
+- name: mate | desktop settings | set number of workspaces
+  tags: mate,mate-desktop,mate-workspaces
+  become_user: jay
+  dconf:
+    key: "/org/mate/marco/general/num-workspaces"
+    value: "6"
+
+- name: mate | desktop settings | set workspace names
+  tags: mate,mate-workspaces
+  become_user: jay
+  dconf:
+    key: "/org/mate/marco/workspace-names/name-{{ item.number }}"
+    value: "'{{ item.name }}'"
+  with_items:
+    - { number: 1, name: mail }
+    - { number: 2, name: chat }
+    - { number: 3, name: browse }
+    - { number: 4, name: cli }
+    - { number: 5, name: dev }
+    - { number: 6, name: media }

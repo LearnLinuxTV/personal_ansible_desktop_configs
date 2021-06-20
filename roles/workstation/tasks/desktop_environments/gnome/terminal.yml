@@ -1,0 +1,23 @@
+- name: gnome | terminal | disable terminal menubar
+  tags: gnome,gnome-terminal
+  become_user: jay
+  dconf:
+    key: "/org/gnome/terminal/legacy/default-show-menubar"
+    value: "false"
+
+- name: gnome | terminal | set terminal configuration
+  tags: gnome,gnome-terminal
+  become_user: jay
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
+    value: "{{ item.value}}"
+  with_items:
+    #- { key: background-color, value: "'rgb(0,0,0)'" }
+    - { key: default-size-columns, value: "120" }
+    #- { key: foreground-color, value: "'rgb(170,170,170)'" }
+    - { key: scrollback-unlimited, value: "true" }
+    - { key: scrollbar-policy, value: "'never'" }
+    #- { key: use-system-font, value: "false" }
+    #- { key: use-theme-colors, value: "false" }
+    #- { key: visible-name, value: "'Main'" }
+    #- { key: font, value: "'Fira Mono Regular 12'" }

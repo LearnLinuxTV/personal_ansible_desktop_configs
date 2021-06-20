@@ -1,0 +1,24 @@
+# note: snap packages not automated in arch yet, snapd is not available in repo
+- name: software | authy | install package
+  tags: packages,authy,snap,workstation-packages
+  snap:
+    name:  authy
+    channel: latest/edge
+    state: present
+  when:
+    - ansible_distribution != "Archlinux"
+    - authy is defined
+    - authy == true
+
+- name: software | authy | enable autostart
+  tags: packages,authy,snap,workstation-packages
+  file:
+    src: /var/lib/snapd/desktop/applications/authy_authy.desktop
+    dest: /home/jay/.config/autostart/authy.desktop
+    owner: jay
+    group: jay
+    state: link
+  when:
+    - ansible_distribution != "Archlinux"
+    - authy is defined
+    - authy == true

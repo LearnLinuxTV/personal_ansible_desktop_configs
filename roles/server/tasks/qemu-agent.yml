@@ -1,0 +1,17 @@
+- name: qemu-agent | install package
+  tags: packages,qemu,qemu-agent
+  package:
+    state: latest
+    name:
+      - qemu-guest-agent
+  when: proxmox_instance is defined and proxmox_instance == true
+  notify:
+    - restart_qemu_agent
+
+- name: qemu-agent | enable qemu agent daemon
+  tags: nagios,nrpe
+  service:
+    name: "{{ qemu_agent_service }}"
+    enabled: yes
+    state: started
+  when: proxmox_instance is defined and proxmox_instance == true

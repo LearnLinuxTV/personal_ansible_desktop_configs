@@ -1,0 +1,26 @@
+# Uncomment the following to disable tracker if the below tweaks aren't enough
+#- name: gnome | tracker | disable monitors
+#  tags: gnome,tracker
+#  become_user: jay
+#  dconf:
+#    key: "/org/freedesktop/tracker/miner/files/enable-monitors"
+#    value: "false"
+
+# Disable indexing while on battery
+- name: gnome | tracker | disable indexing while running on battery
+  tags: gnome,tracker
+  become_user: jay
+  dconf:
+    key: "/org/freedesktop/tracker/miner/files/index-on-battery"
+    value: "false"
+
+# Set ignored directories for Tracker
+- name: gnome | tracker | set ignored directories
+  tags: gnome,tracker
+  become_user: jay
+  dconf:
+    key: "/org/freedesktop/tracker/miner/files/ignored-directories"
+    value: "['po', 'CVS', 'core-dumps', '/home/jay/downloads', 'lost+found', '/mnt/freenas']"
+  notify:
+    - gnome_tracker_clean_cache
+    - gnome_tracker_clean_local_cache
