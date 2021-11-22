@@ -1,7 +1,7 @@
 - name: software | firefox | install package
   tags: packages,firefox,flatpak,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.mozilla.firefox
     method: user
     state: present

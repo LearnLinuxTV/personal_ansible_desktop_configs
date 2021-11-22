@@ -1,7 +1,7 @@
 - name: software | vlc | install package
   tags: packages,flatpak,vlc,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.videolan.VLC
     method: user
     state: present

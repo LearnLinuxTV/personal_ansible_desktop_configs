@@ -1,6 +1,6 @@
 - name: software | install workstation distribution packages
   tags: packages,workstation-packages
-  package:
+  ansible.builtin.package:
     name:
       - acpid
       - alsa-utils
@@ -45,7 +45,7 @@
 
 - name: software | install system packages specific to debian and ubuntu
   tags: packages,system,system-packages,workstation-packages
-  package:
+  ansible.builtin.package:
     name:
       - synaptic
       - vim-gtk3
@@ -53,7 +53,7 @@
 
 - name: software | remove unneeded workstation packages on debian and ubuntu hosts
   tags: cleanup,packages,workstation-packages
-  package:
+  ansible.builtin.package:
     state: absent
     name:
       - firefox*

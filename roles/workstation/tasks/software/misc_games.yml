@@ -1,6 +1,6 @@
 - name: software | install misc game packages
   tags: gaming
-  package:
+  ansible.builtin.package:
     name:
       - chromium-bsu
       - extremetuxracer

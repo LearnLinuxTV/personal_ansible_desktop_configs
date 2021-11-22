@@ -1,6 +1,6 @@
 - name: system setup | autofs | install package
   tags: autofs
-  package:
+  ansible.builtin.package:
     name: autofs
   when:
     - autofs is defined
@@ -8,7 +8,7 @@
 
 - name: autofs | start and enable daemon
   tags: autofs
-  service:
+  ansible.builtin.service:
     name: autofs
     state: started
     enabled: true
@@ -18,11 +18,11 @@
 
 - name: system setup | autofs | copy auto.master config file
   tags: autofs,dotfiles,dotfiles-jay
-  copy:
+  ansible.builtin.copy:
     src: autofs/auto.master
     dest: "{{ autofs_master_config }}"
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0644
   when:
     - autofs is defined
@@ -31,11 +31,11 @@
 
 - name: system setup | autofs | copy auto.nfs config file
   tags: autofs,dotfiles,dotfiles-jay
-  copy:
+  ansible.builtin.copy:
     src: autofs/auto.nfs
     dest: "{{ autofs_nfs_config }}"
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0644
   when:
     - autofs is defined

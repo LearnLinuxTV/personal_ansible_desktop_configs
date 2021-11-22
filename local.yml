@@ -5,13 +5,13 @@
   pre_tasks:
     - name: pre-run | update package cache (arch)
       tags: always
-      pacman: update_cache=yes
+      community.general.pacman: update_cache=yes
       changed_when: False
       when: ansible_distribution == "Archlinux"
 
     - name: pre-run | update package cache (debian, etc)
       tags: always
-      apt: update_cache=yes
+      ansible.builtin.apt: update_cache=yes
       changed_when: False
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
@@ -40,26 +40,26 @@
   tasks:
   - name: cleanup package cache (debian and ubuntu)
     tags: always
-    apt:
+    ansible.builtin.apt:
       autoclean: yes
     changed_when: false
     when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
 
   - name: autoremove orphan packages (debian and ubuntu)
     tags: always
-    apt:
+    ansible.builtin.apt:
       autoremove: yes
       purge: yes
     when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
 
   - name: send completion alert
-    include_tasks: playbooks/send_completion_alert.yml
+    ansible.builtin.include_tasks: playbooks/send_completion_alert.yml
     tags: always
     when:
       - task_failed is not defined
 
   - name: send failure alert
-    include_tasks: playbooks/send_failure_alert.yml
+    ansible.builtin.include_tasks: playbooks/send_failure_alert.yml
     tags: always
     when:
       - task_failed is defined

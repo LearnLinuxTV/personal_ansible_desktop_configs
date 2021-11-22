@@ -1,6 +1,6 @@
 - name: mate | packages | install mate packages
   tags: mate,mate-packages
-  package:
+  ansible.builtin.package:
     name:
       - atril
       - caja
@@ -29,7 +29,7 @@
 
 - name: mate | packages | install ubuntu mate themes
   tags: mate,mate-packages
-  package:
+  ansible.builtin.package:
     name: ubuntu-mate-artwork
     state: latest
   when: ansible_distribution == "Ubuntu"

@@ -1,14 +1,14 @@
 - name: users | root | ensure account is locked
-  user:
+  ansible.builtin.user:
     name: root
     password_lock: yes
 
 - name: users | root | create config directories
-  file:
+  ansible.builtin.file:
     path: /root/{{ item.dir }}
     state: directory
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0700
   with_items:
       - { dir: '.vim' }
@@ -16,11 +16,11 @@
   tags: dotfiles
 
 - name: users | root | copy dotfiles
-  copy:
+  ansible.builtin.copy:
     src: users/root/{{ item.src }}
     dest: /root/{{ item.dest}}
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0600
   with_items:
       - { src: 'bash/bashrc', dest: '.bashrc' }

@@ -1,6 +1,6 @@
 - name: system setup | utilities | install utility packages
   tags: packages,system,settings
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - at
@@ -32,7 +32,7 @@
 
 - name: system setup | utilities | install man-pages (arch)
   tags: packages,system,settings
-  pacman:
+  community.general.pacman:
     state: latest
     name:
       - man-db

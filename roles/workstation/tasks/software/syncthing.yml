@@ -1,11 +1,11 @@
 # add syncthing-controlled directories
 - name: software | syncthing | create directories
   tags: syncthing
-  file:
+  ansible.builtin.file:
     path: /home/jay/{{ item.dir }}
     state: directory
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0700
   with_items:
     - { dir: bin }
@@ -18,11 +18,11 @@
 
 - name: software | syncthing | copy .stignore file to synced directories
   tags: syncthing
-  copy:
+  ansible.builtin.copy:
     src: users/jay/stignore
     dest: /home/jay/{{ item.dir }}/.stignore
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { dir: bin }
@@ -36,7 +36,7 @@
 # syncthing repository for debian and ubuntu
 - name: software | syncthing | install apt key
   tags: syncthing
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://syncthing.net/release-key.txt
     state: present
   when:
@@ -46,7 +46,7 @@
 
 - name: software | syncthing | install repository
   tags: syncthing
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://apt.syncthing.net/ syncthing stable
     state: present
     filename: syncthing
@@ -57,7 +57,7 @@
 
 - name: software | syncthing | install syncthing packages
   tags: syncthing
-  package:
+  ansible.builtin.package:
     name:
       - syncthing
       #- syncthing-gtk
@@ -69,11 +69,11 @@
 
 #- name: software | syncthing | add .desktop file for autostarting syncthing-gtk
 #  tags: syncthing
-#  copy:
+#  ansible.builtin.copy:
 #    src: users/jay/syncthing-gtk.desktop
 #    dest: /home/jay/.config/autostart/syncthing-gtk.desktop
 #    owner: jay
-#    group: jay
+#    ansible.builtin.group: jay
 #    mode: 0600
 #  when:
 #    - syncthing is defined
@@ -81,11 +81,11 @@
 
 #- name: software | syncthing | ensure syncthing-gtk config folder exists
 #  tags: syncthing
-#  file:
+#  ansible.builtin.file:
 #    path: /home/jay/.config/syncthing-gtk
 #    state: directory
 #    owner: jay
-#    group: jay
+#    ansible.builtin.group: jay
 #    mode: 0700
 #  when:
 #   - syncthing is defined
@@ -93,11 +93,11 @@
 
 #- name: software | syncthing | add initial configuration file for syncthing-gtk
 #  tags: syncthing
-#  copy:
+#  ansible.builtin.copy:
 #    src: users/jay/syncthing_config.json
 #    dest: /home/jay/.config/syncthing-gtk/config.json
 #    owner: jay
-#    group: jay
+#    ansible.builtin.group: jay
 #    mode: 0600
 #  when:
 #    - syncthing is defined
@@ -107,7 +107,7 @@
 # Note: Not using systemd module because it triggers a dbus error due to no session while user is not logged in
 - name: software | syncthing | start and enable syncthing
   tags: syncthing
-  command: "{{ item }}"
+  ansible.builtin.command: "{{ item }}"
   with_items:
     - systemctl enable syncthing@jay
     - systemctl restart syncthing@jay
@@ -125,10 +125,10 @@
 - name: software | syncthing | config.xml - disable browser
   tags: syncthing
   become_user: jay
-  replace:
+  ansible.builtin.replace:
     path: /home/jay/.config/syncthing/config.xml
     regexp: "<startBrowser>true</startBrowser>"
-    replace: "<startBrowser>false</startBrowser>"
+    ansible.builtin.replace: "<startBrowser>false</startBrowser>"
   notify: restart_syncthing
   when:
     - syncthing is defined
@@ -137,10 +137,10 @@
 - name: software | syncthing | config.xml - set ui theme
   tags: syncthing
   become_user: jay
-  replace:
+  ansible.builtin.replace:
     path: /home/jay/.config/syncthing/config.xml
     regexp: "<theme>default</theme>"
-    replace: "<theme>dark</theme>"
+    ansible.builtin.replace: "<theme>dark</theme>"
   notify: restart_syncthing
   when:
     - syncthing is defined
@@ -148,6 +148,6 @@
 
 - name: software | syncthing | remove default sync directory (~/Sync) from host
   tags: syncthing
-  file:
+  ansible.builtin.file:
     path: /home/jay/Sync
     state: absent

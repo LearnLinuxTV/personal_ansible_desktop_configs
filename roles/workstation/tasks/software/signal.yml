@@ -1,7 +1,7 @@
 - name: software | signal | install package
   tags: packages,flatpak,signal,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.signal.Signal
     method: user
     state: present
@@ -9,10 +9,10 @@
 
 - name: software | signal | enable autostart
   tags: packages,flatpak,signal,workstation-packages
-  file:
+  ansible.builtin.file:
     src: /home/jay/.local/share/flatpak/exports/share/applications/org.signal.Signal.desktop
     dest: /home/jay/.config/autostart/org.signal.Signal.desktop
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     state: link
   when: signal is defined and signal == true

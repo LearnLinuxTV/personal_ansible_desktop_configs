@@ -1,6 +1,6 @@
 - name: software | ulauncher | install ppa
   tags: ulauncher
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: 'ppa:agornostal/ulauncher'
     state: present
   when:
@@ -10,7 +10,7 @@
 
 - name: software | ulauncher | install package
   tags: ulauncher
-  apt:
+  ansible.builtin.apt:
     name: ulauncher
     state: latest
   when:
@@ -20,11 +20,11 @@
 
 - name: software | ulauncher | enable autostart
   tags: ulauncher
-  copy:
+  ansible.builtin.copy:
     src: users/jay/ulauncher.desktop
     dest: /home/jay/.config/autostart/ulauncher.desktop
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   when:
     - ansible_distribution in ["Pop!_OS", "Ubuntu"]

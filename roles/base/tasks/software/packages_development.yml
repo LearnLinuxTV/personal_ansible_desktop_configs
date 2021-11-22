@@ -1,6 +1,6 @@
 - name: system setup | development packages | install packages
   tags: dev,development,packages,python,ruby
-  package:
+  ansible.builtin.package:
     name:
       - fabric
       - flake8

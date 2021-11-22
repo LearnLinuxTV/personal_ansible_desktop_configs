@@ -3,7 +3,7 @@
 
 - name: software | virtualbox | install apt key (debian)
   tags: virtualbox,repositories,virtualbox
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
     state: present
   when:
@@ -13,7 +13,7 @@
 
 - name: software | virtualbox | install repository (debian)
   tags: virtualbox,repositories,virtualbox
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://download.virtualbox.org/virtualbox/debian buster contrib
     state: present
     filename: virtualbox
@@ -25,7 +25,7 @@
 
 - name: software | virtualbox | install package
   tags: virtualbox
-  package:
+  ansible.builtin.package:
     name: "{{ virtualbox_package }}"
   when:
     - virtualbox is defined

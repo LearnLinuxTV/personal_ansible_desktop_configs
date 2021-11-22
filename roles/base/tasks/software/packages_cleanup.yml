@@ -1,6 +1,6 @@
 - name: system setup | package cleanup | remove unneeded packages (debian, ubuntu, etc)
   tags: cleanup,packages,system,settings
-  package:
+  ansible.builtin.package:
     state: absent
     name:
       - cowsay

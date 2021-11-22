@@ -1,7 +1,7 @@
 - name: software | glimpse | install package
   tags: packages,flatpak,glimpse,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.glimpse_editor.Glimpse
     method: user
     state: present

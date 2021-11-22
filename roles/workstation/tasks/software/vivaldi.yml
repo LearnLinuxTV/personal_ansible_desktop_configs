@@ -1,6 +1,6 @@
 - name: software | vivaldi | add repository key
   tags: packages,vivaldi
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://repo.vivaldi.com/stable/linux_signing_key.pub
     state: present
   when:
@@ -9,13 +9,13 @@
     - vivaldi == true
 
 - name: software | vivaldi | check if repository exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/apt/sources.list.d/vivaldi.list
   register: vivaldi_repo_file
 
 - name: software | vivaldi | add repository
   tags: packages,vivaldi
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://repo.vivaldi.com/stable/deb/ stable main"
     state: present
     filename: vivaldi
@@ -27,7 +27,7 @@
 
 - name: software | vivaldi | install package
   tags: packages,vivaldi
-  apt:
+  ansible.builtin.apt:
     name: vivaldi-stable
     state: latest
   when:

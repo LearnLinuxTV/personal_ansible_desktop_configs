@@ -1,14 +1,14 @@
 - name: users | jay | create group
   tags: groups,jay,users
-  group:
+  ansible.builtin.group:
     name: jay
     state: present
 
 - name: users | jay | create user
   tags: jay,sudo,users
-  user:
+  ansible.builtin.user:
     name: jay
-    group: jay
+    ansible.builtin.group: jay
     groups: adm,ansible,{{ sudo_group }}
     state: present
     comment: "Jay LaCroix"
@@ -17,20 +17,20 @@
 
 - name: users | jay | jay | add sudoers file
   tags: jay,settings,simone,sudo,system,users
-  copy:
+  ansible.builtin.copy:
     src: users/sudoers_jay
     dest: /etc/sudoers.d/jay
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0440
 
 - name: users | jay | create .ssh directory
   tags: dotfiles,jay,ssh,users
-  file:
+  ansible.builtin.file:
     path: "{{ item.dir }}"
     state: directory
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0700
   with_items:
     - { dir: '/home/jay/.ssh' }
@@ -38,18 +38,18 @@
 - name: users | jay | add public key
   tags: dotfiles,jay,ssh,ssh-keys,users
   authorized_key:
-    user: jay
+    ansible.builtin.user: jay
     key: "{{ item }}"
   with_file:
     - users/jay/ssh/jay_id_ed25519.pub
 
 - name: users | jay | create config directories
   tags: dotfiles,jay,tmux,users,vim,zsh
-  file:
+  ansible.builtin.file:
     path: /home/jay/{{ item.dir }}
     state: directory
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0700
   with_items:
     - { dir: '.bash' }
@@ -68,31 +68,31 @@
 
 - name: users | jay | copy tmux config (server version)
   tags: dotfiles,users,jay,tmux,users,vim,zsh
-  copy:
+  ansible.builtin.copy:
     src: users/jay/tmux/tmux.conf.server
     dest: /home/jay/.tmux.conf
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   when: "'server' not in group_names"
 
 - name: users | jay | copy tmux config (workstation version)
   tags: dotfiles,users,jay,tmux,users,vim,zsh
-  copy:
+  ansible.builtin.copy:
     src: users/jay/tmux/tmux.conf.workstation
     dest: /home/jay/.tmux.conf
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   when: "'server' in group_names"
 
 - name: users | jay | copy dotfiles
   tags: dotfiles,users,jay,tmux,users,vim,zsh
-  copy:
+  ansible.builtin.copy:
     src: users/jay/{{ item.src }}
     dest: /home/jay/{{ item.dest }}
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
@@ -110,7 +110,7 @@
 
 - name: users | jay | clone tmux-completion plugin repository
   tags: dotfiles,jay,users,tmux
-  git:
+  ansible.builtin.git:
     repo: https://github.com/srsudar/tmux-completion.git
     dest: /home/jay/.tmux/plugins/completion
     force: yes
@@ -118,7 +118,7 @@
 
 - name: users | jay | clone tmux-continuum plugin repository
   tags: dotfiles,jay,users,tmux
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tmux-continuum
     dest: /home/jay/.tmux/plugins/continuum
     force: yes
@@ -126,7 +126,7 @@
 
 - name: users | jay | clone tmux-resurrect plugin repository
   tags: dotfiles,jay,users,tmux
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tmux-resurrect
     dest: /home/jay/.tmux/plugins/resurrect
     force: yes
@@ -134,11 +134,11 @@
 
 - name: users | jay | copy individual zsh config files
   tags: dotfiles,jay,users,zsh
-  copy:
+  ansible.builtin.copy:
     src: users/jay/zsh/{{ item.src }}
     dest: /home/jay/.zsh/{{ item.src }}
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { src: 'aliases.zsh' }
@@ -155,11 +155,11 @@
 
 - name: users | jay | copy vim ftype files
   tags: dotfiles,jay,users,vim
-  copy:
+  ansible.builtin.copy:
     src: users/jay/vim/{{ item.src }}
     dest: /home/jay/.vim/ftplugin/{{ item.src }}
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { src: 'cmake.vim' }
@@ -173,11 +173,11 @@
 
 - name: users | jay | copy vim color files
   tags: dotfiles,jay,users,vim
-  copy:
+  ansible.builtin.copy:
     src: users/jay/vim/{{ item.src }}
     dest: /home/jay/.vim/colors/{{ item.src }}
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { src: 'bubblegum-256-dark.vim' }
@@ -188,11 +188,11 @@
 
 - name: users | jay | install pathogen
   tags: dotfiles,jay,users,vim
-  copy:
+  ansible.builtin.copy:
     src: users/jay/vim/{{ item.src }}
     dest: "{{ item.dest }}"
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0700
   with_items:
     - { src: 'pathogen.vim', dest: '/home/jay/.vim/autoload/pathogen.vim' }
@@ -200,7 +200,7 @@
 - name: users | jay | checkout git repositories
   tags: git,users,jay
   become: yes
-  git:
+  ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     force: yes

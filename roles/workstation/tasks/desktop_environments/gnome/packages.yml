@@ -1,7 +1,7 @@
 # Note: Some of these packages are disabled, they depend on tracker which is currently being disabled
 - name: gnome | packages | install gnome packages
   tags: gnome,gnome-packages
-  package:
+  ansible.builtin.package:
     name:
       - eog
       - file-roller
@@ -28,7 +28,7 @@
 
 - name: gnome | packages | install flatpak support in gnome software
   tags: gnome,gnome-packages
-  package:
+  ansible.builtin.package:
     name:
     - gnome-software-plugin-flatpak
   when: ansible_distribution in ["Debian", "Ubuntu"]
@@ -37,14 +37,14 @@
 # This doesn't seem to be required in archlinux.
 - name: gnome | packages | install gnome support for network-manager for debian and ubuntu hosts
   tags: gnome,gnome-packages,packages
-  package:
+  ansible.builtin.package:
     name:
       - network-manager-openvpn-gnome
   when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
 
 - name: gnome | packages | enable and start gdm
   tags: autofs,system,system setup
-  service:
+  ansible.builtin.service:
     name: gdm
     enabled: true
     state: started

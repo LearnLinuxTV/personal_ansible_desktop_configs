@@ -1,5 +1,5 @@
 - name: users | jay | remove preinstalled clutter from home directory
-  file:
+  ansible.builtin.file:
     path: /home/jay/{{ item }}
     state: absent
   with_items:
@@ -15,11 +15,11 @@
 
 - name: users | jay | create personal config directories
   tags: dotfiles,dotfiles-jay
-  file:
+  ansible.builtin.file:
     path: /home/jay/{{ item.dir }}
     state: directory
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0700
   with_items:
     - { dir: .config }
@@ -39,21 +39,21 @@
 
 - name: users | jay | copy user-dirs.dirs
   tags: dotfiles,dotfiles-jay
-  copy:
+  ansible.builtin.copy:
     src: users/jay/user-dirs.dirs
     dest: /home/jay/.config/user-dirs.dirs
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   notify: update_xdg
 
 - name: users | jay | copy personal config files
   tags: dotfiles,dotfiles-jay
-  copy:
+  ansible.builtin.copy:
     src: users/jay/{{ item.src }}
     dest: /home/jay/{{ item.dest }}
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     mode: 0600
   with_items:
     - { src: 'asunder', dest: '.asunder' }
@@ -67,9 +67,9 @@
 
 - name: users | jay | copy profile image
   tags: dotfiles,dotfiles-jay
-  copy:
+  ansible.builtin.copy:
     src: users/jay/profile_image.png
     dest: /var/lib/AccountsService/icons/jay.png
     owner: root
-    group: root
+    ansible.builtin.group: root
     mode: 0644

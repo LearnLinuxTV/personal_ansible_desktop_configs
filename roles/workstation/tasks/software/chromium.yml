@@ -2,7 +2,7 @@
 
 - name: software | chromium | install snap package
   tags: packages,chromium,snap,workstation-packages
-  snap:
+  community.general.snap:
     name:  chromium
     state: present
   when:
@@ -12,7 +12,7 @@
 
 - name: software | chromium | install distro package (arch)
   tags: packages,chromium,snap,workstation-packages
-  package:
+  ansible.builtin.package:
     name:  chromium
     state: latest
   when:

@@ -2,7 +2,7 @@
 #- name: gnome | tracker | disable monitors
 #  tags: gnome,tracker
 #  become_user: jay
-#  dconf:
+#  community.general.dconf:
 #    key: "/org/freedesktop/tracker/miner/files/enable-monitors"
 #    value: "false"
 
@@ -10,7 +10,7 @@
 - name: gnome | tracker | disable indexing while running on battery
   tags: gnome,tracker
   become_user: jay
-  dconf:
+  community.general.dconf:
     key: "/org/freedesktop/tracker/miner/files/index-on-battery"
     value: "false"
 
@@ -18,7 +18,7 @@
 - name: gnome | tracker | set ignored directories
   tags: gnome,tracker
   become_user: jay
-  dconf:
+  community.general.dconf:
     key: "/org/freedesktop/tracker/miner/files/ignored-directories"
     value: "['po', 'CVS', 'core-dumps', '/home/jay/downloads', 'lost+found', '/mnt/freenas']"
   notify:

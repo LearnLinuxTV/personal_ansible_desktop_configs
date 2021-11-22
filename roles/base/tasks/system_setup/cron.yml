@@ -1,13 +1,13 @@
 - name: system setup | cron | install cron package
   tags: packages,cron
-  package:
+  ansible.builtin.package:
     name:
       - "{{ cron_package }}"
     state: latest
 
 - name: system setup | cron | start and enable cronie daemon
   tags: cron
-  service:
+  ansible.builtin.service:
     name: cronie
     state: started
     enabled: true
@@ -15,17 +15,17 @@
 
 - name: system setup | cron | schedule automatic ansible provisioning
   tags: cron
-  cron:
+  ansible.builtin.cron:
     name: "ansible provision"
-    user: simone
+    ansible.builtin.user: simone
     hour: "{{ ansible_cron_hour | default('*') }}"
     minute: "{{ ansible_cron_minute | default('*/30') }}"
     job: "/usr/local/bin/provision > /dev/null"
 
 - name: system setup | cron | schedule ansible cleanup at boot
   tags: cron
-  cron:
+  ansible.builtin.cron:
     name: "ansible refresh at boot"
-    user: simone
+    ansible.builtin.user: simone
     special_time: reboot
     job: "/bin/rm -rf /home/simone/.ansible"

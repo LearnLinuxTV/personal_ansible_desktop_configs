@@ -1,7 +1,7 @@
 - name: software | audacity | install package
   tags: packages,flatpak,audacity,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.audacityteam.Audacity
     method: user
     state: present

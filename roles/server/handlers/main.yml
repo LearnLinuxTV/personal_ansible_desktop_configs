@@ -1,18 +1,18 @@
 ---
 - name: restart_nrpe
   tags: nagios,nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ nrpe_service }}"
     state: restarted
 
 - name: restart_qemu_agent
   tags: qemu,qemu-agent
-  service:
+  ansible.builtin.service:
     name: "{{ qemu_agent_service }}"
     state: restarted
 
 - name: restart_ufw
   tags: ufw
-  service:
+  ansible.builtin.service:
     name: ufw
     state: restarted

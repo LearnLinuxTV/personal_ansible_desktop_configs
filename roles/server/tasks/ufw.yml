@@ -1,6 +1,6 @@
 - name: ufw | install package
   tags: ufw
-  package:
+  ansible.builtin.package:
     state: latest
     name: ufw
   notify:

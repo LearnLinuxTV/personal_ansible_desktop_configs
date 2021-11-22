@@ -1,10 +1,10 @@
 - name: software | install workstation distribution packages
   tags: packages,workstation-packages
-  package:
+  ansible.builtin.package:
     name: solaar
     state: latest
 
 - name: software | make sure solaar doesn't autostart
-  file:
+  ansible.builtin.file:
     path: /etc/xdg/autostart/solaar.desktop
     state: absent

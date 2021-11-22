@@ -1,7 +1,7 @@
 - name: software | thunderbird | install package
   tags: packages,flatpak,thunderbird,workstation-packages
   become_user: jay
-  flatpak:
+  community.general.flatpak:
     name: org.mozilla.thunderbird
     method: user
     state: present
@@ -9,10 +9,10 @@
 
 - name: software | thunderbird | enable autostart
   tags: packages,flatpak,thunderbird,workstation-packages
-  file:
+  ansible.builtin.file:
     src: /home/jay/.local/share/flatpak/exports/share/applications/org.mozilla.Thunderbird.desktop
     dest: /home/jay/.config/autostart/org.mozilla.Thunderbird.desktop
     owner: jay
-    group: jay
+    ansible.builtin.group: jay
     state: link
   when: thunderbird is defined and thunderbird == true

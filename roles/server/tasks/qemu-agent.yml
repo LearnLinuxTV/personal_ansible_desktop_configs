@@ -1,6 +1,6 @@
 - name: qemu-agent | install package
   tags: packages,qemu,qemu-agent
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - qemu-guest-agent
@@ -10,7 +10,7 @@
 
 - name: qemu-agent | enable qemu agent daemon
   tags: nagios,nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ qemu_agent_service }}"
     enabled: yes
     state: started

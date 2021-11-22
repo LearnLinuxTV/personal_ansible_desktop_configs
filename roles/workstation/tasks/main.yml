@@ -1,102 +1,102 @@
 # Load distro-specific variables
-- include_vars: "{{ ansible_distribution }}.yml"
+- ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
   tags: always
 
 - block:
   ## User configs
-  - import_tasks: users/jay.yml
+  - ansible.builtin.import_tasks: users/jay.yml
 
 ## desktop environments
 
-  - include_tasks: desktop_environments/mate/appearance.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/appearance.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/caja.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/caja.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/keybindings.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/keybindings.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/packages.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/packages.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/peripherals.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/peripherals.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/terminal.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/terminal.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/mate/workspace_settings.yml
+  - ansible.builtin.include_tasks: desktop_environments/mate/workspace_settings.yml
     when: mate is defined and mate == true
 
-  - include_tasks: desktop_environments/gnome/appearance.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/appearance.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/keybindings.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/keybindings.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/nautilus.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/nautilus.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/packages.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/packages.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/peripherals.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/peripherals.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/shell_settings.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/shell_settings.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/terminal.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/terminal.yml
     when: gnome is defined and gnome == true
 
-  - include_tasks: desktop_environments/gnome/tracker.yml
+  - ansible.builtin.include_tasks: desktop_environments/gnome/tracker.yml
     when: gnome is defined and gnome == true
 
   ## system setup
-  - import_tasks: system_setup/autofs.yml
-  - import_tasks: system_setup/scripts.yml
-  - import_tasks: system_setup/tweaks.yml
+  - ansible.builtin.import_tasks: system_setup/autofs.yml
+  - ansible.builtin.import_tasks: system_setup/scripts.yml
+  - ansible.builtin.import_tasks: system_setup/tweaks.yml
 
   ## install software
-  - import_tasks: software/audacious.yml
-  - import_tasks: software/audacity.yml
-  - import_tasks: software/authy.yml
-  - import_tasks: software/bitwarden.yml
-  - import_tasks: software/caffeine.yml
-  - import_tasks: software/codecs.yml
-  - import_tasks: software/boto.yml
-  - import_tasks: software/chromium.yml
-  - import_tasks: software/darktable.yml
-  - import_tasks: software/firefox.yml
-  - import_tasks: software/foliate.yml
-  - import_tasks: software/google_chrome.yml
-  - import_tasks: software/glimpse.yml
-  - import_tasks: software/kdenlive.yml
-  - import_tasks: software/keepassxc.yml
-  - import_tasks: software/libreoffice.yml
-  - import_tasks: software/linode-cli.yml
-  - import_tasks: software/lutris.yml
-  - import_tasks: software/mattermost.yml
-  - import_tasks: software/minecraft.yml
-  - import_tasks: software/misc_games.yml
-  - import_tasks: software/misc_packages.yml
-  - import_tasks: software/openshot.yml
-  - import_tasks: software/packer.yml
-  - import_tasks: software/signal.yml
-  - import_tasks: software/solaar.yml
-  - import_tasks: software/spotify.yml
-  - import_tasks: software/steam.yml
-  - import_tasks: software/syncthing.yml
-  - import_tasks: software/terraform.yml
-  - import_tasks: software/thunderbird.yml
-  - import_tasks: software/todoist.yml
-  - import_tasks: software/ulauncher.yml
-  - import_tasks: software/vagrant.yml
-  - import_tasks: software/virtualbox.yml
-  - import_tasks: software/vivaldi.yml
-  - import_tasks: software/vlc.yml
-  - import_tasks: software/xonotic.yml
+  - ansible.builtin.import_tasks: software/audacious.yml
+  - ansible.builtin.import_tasks: software/audacity.yml
+  - ansible.builtin.import_tasks: software/authy.yml
+  - ansible.builtin.import_tasks: software/bitwarden.yml
+  - ansible.builtin.import_tasks: software/caffeine.yml
+  - ansible.builtin.import_tasks: software/codecs.yml
+  - ansible.builtin.import_tasks: software/boto.yml
+  - ansible.builtin.import_tasks: software/chromium.yml
+  - ansible.builtin.import_tasks: software/darktable.yml
+  - ansible.builtin.import_tasks: software/firefox.yml
+  - ansible.builtin.import_tasks: software/foliate.yml
+  - ansible.builtin.import_tasks: software/google_chrome.yml
+  - ansible.builtin.import_tasks: software/glimpse.yml
+  - ansible.builtin.import_tasks: software/kdenlive.yml
+  - ansible.builtin.import_tasks: software/keepassxc.yml
+  - ansible.builtin.import_tasks: software/libreoffice.yml
+  - ansible.builtin.import_tasks: software/linode-cli.yml
+  - ansible.builtin.import_tasks: software/lutris.yml
+  - ansible.builtin.import_tasks: software/mattermost.yml
+  - ansible.builtin.import_tasks: software/minecraft.yml
+  - ansible.builtin.import_tasks: software/misc_games.yml
+  - ansible.builtin.import_tasks: software/misc_packages.yml
+  - ansible.builtin.import_tasks: software/openshot.yml
+  - ansible.builtin.import_tasks: software/packer.yml
+  - ansible.builtin.import_tasks: software/signal.yml
+  - ansible.builtin.import_tasks: software/solaar.yml
+  - ansible.builtin.import_tasks: software/spotify.yml
+  - ansible.builtin.import_tasks: software/steam.yml
+  - ansible.builtin.import_tasks: software/syncthing.yml
+  - ansible.builtin.import_tasks: software/terraform.yml
+  - ansible.builtin.import_tasks: software/thunderbird.yml
+  - ansible.builtin.import_tasks: software/todoist.yml
+  - ansible.builtin.import_tasks: software/ulauncher.yml
+  - ansible.builtin.import_tasks: software/vagrant.yml
+  - ansible.builtin.import_tasks: software/virtualbox.yml
+  - ansible.builtin.import_tasks: software/vivaldi.yml
+  - ansible.builtin.import_tasks: software/vlc.yml
+  - ansible.builtin.import_tasks: software/xonotic.yml
 
   rescue:
     - set_fact: task_failed=true
