@@ -54,6 +54,17 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 alias svim='sudo vim'
 alias tn=' tmux new -s'
 alias wget='wget -c'
+alias ip="ip -color"
+alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+alias psmem='ps auxf | sort -nr -k 4'
+alias grubup="sudo update-grub"
+alias big="expac -H M '%m\t%n' | sort -h | nl" 
+alias dir='dir --color=auto'
+alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'
+alias cat='bat --style header --style rules --style snip --style changes --style header'
+alias tb='nc termbin.com 9999'
+alias jctl="journalctl -p 3 -xb"
+
 
 if command -v colordiff > /dev/null 2>&1; then
     alias diff="colordiff -Nuar"
@@ -79,9 +90,9 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # package management
-alias update='sudo apt-get update'
-alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
-alias install='sudo apt-get install'
+alias update='sudo pacman -Syyy'
+alias upgrade='sudo pacman -Sy && sudo powerpill -Su && paru -Su'
+alias install='sudo pacman -S'
 
 ##### Functions
 

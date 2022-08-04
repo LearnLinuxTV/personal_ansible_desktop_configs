@@ -1,0 +1,17 @@
+{
+    "cSpell.enableFiletypes": [
+        "cmake",
+        "diff",
+        "dockercompose",
+        "dockerfile",
+        "git-rebase",
+        "gitignore",
+        "go.mod",
+        "go.sum",
+        "go.work",
+        "gotmpl",
+        "lua",
+        "makefile",
+        "shellscript"
+    ]
+}

@@ -14,9 +14,9 @@ export EDITOR=vim
 # Show system information at login
 if [ -t 0 ]; then
     if type -p "fastfetch" > /dev/null; then
-        neofetch
+        fastfetch
     else
-        echo "Warning: neofetch was called, but it's not installed."
+        echo "Warning: fastfetch was called, but it's not installed."
     fi
 fi
 
