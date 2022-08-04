@@ -1,11 +1,3 @@
-# Personal Ansible Desktop Configs
-
-I use Ansible to configure all of my desktops, laptops, and servers. I use the Ansible Pull method, which I describe in both my Ansible Pull tutorial (already uploaded) and my Ansible desktop tutorial (will be published by December 11th 2020). It's fully automated, and scripts everything from system services to GNOME desktop settings.
-
-## Disclaimer
-This repository contains a copy of the Ansible configuration that I use for laptops, desktops as well as servers.
-Please don't directly use this against your own machines, as it is something I developed for myself and may not translate to your use-case. It even configures OpenSSH, so if you run it you may get locked out. I've provided this as a HUGE example you can use to build your own, and compare syntax.
-
 ## How does it work?
 As mentioned above, it uses Ansible pull, so some familiarity with that is required. Luckily for you, I have a few videos on my channel that describes how Ansible pull works. Check out the LearnLinuxTV channel, the videos can be found in the Ansible playlist. I use Ansible in "pull-mode" because it handles the dynamic nature of laptops and desktops better. Afterall, they aren't always turned on. And I don't like to maintain multiple things for one purpose, so I have the same repo configuring servers as well.
 
