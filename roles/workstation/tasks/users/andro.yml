@@ -1,6 +1,6 @@
-- name: users | jay | remove preinstalled clutter from home directory
+- name: users | andro | remove preinstalled clutter from home directory
   file:
-    path: /home/jay/{{ item }}
+    path: /home/andro/{{ item }}
     state: absent
   with_items:
     - examples.desktop
@@ -13,13 +13,13 @@
     - Templates
     - Videos
 
-- name: users | jay | create personal config directories
-  tags: dotfiles,dotfiles-jay
+- name: users | andro | create personal config directories
+  tags: dotfiles,dotfiles-andro
   file:
-    path: /home/jay/{{ item.dir }}
+    path: /home/andro/{{ item.dir }}
     state: directory
-    owner: jay
-    group: jay
+    owner: andro
+    group: andro
     mode: 0700
   with_items:
     - { dir: .config }
@@ -37,23 +37,23 @@
     - { dir: projects }
     - { dir: templates }
 
-- name: users | jay | copy user-dirs.dirs
-  tags: dotfiles,dotfiles-jay
+- name: users | andro | copy user-dirs.dirs
+  tags: dotfiles,dotfiles-andro
   copy:
-    src: users/jay/user-dirs.dirs
-    dest: /home/jay/.config/user-dirs.dirs
-    owner: jay
-    group: jay
+    src: users/andro/user-dirs.dirs
+    dest: /home/andro/.config/user-dirs.dirs
+    owner: andro
+    group: andro
     mode: 0600
   notify: update_xdg
 
-- name: users | jay | copy personal config files
-  tags: dotfiles,dotfiles-jay
+- name: users | andro | copy personal config files
+  tags: dotfiles,dotfiles-andro
   copy:
-    src: users/jay/{{ item.src }}
-    dest: /home/jay/{{ item.dest }}
-    owner: jay
-    group: jay
+    src: users/andro/{{ item.src }}
+    dest: /home/andro/{{ item.dest }}
+    owner: andro
+    group: andro
     mode: 0600
   with_items:
     - { src: 'asunder', dest: '.asunder' }
@@ -65,11 +65,11 @@
     - { src: 'ssh_client_config', dest: '.ssh/config' }
     - { src: 'terminator_config', dest: '.config/terminator/config' }
 
-- name: users | jay | copy profile image
-  tags: dotfiles,dotfiles-jay
+- name: users | andro | copy profile image
+  tags: dotfiles,dotfiles-andro
   copy:
-    src: users/jay/profile_image.png
-    dest: /var/lib/AccountsService/icons/jay.png
+    src: users/andro/profile_image.png
+    dest: /var/lib/AccountsService/icons/andro.png
     owner: root
     group: root
     mode: 0644

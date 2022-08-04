@@ -1,6 +1,6 @@
 - name: software | signal | install package
   tags: packages,flatpak,signal,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: org.signal.Signal
     method: user
@@ -10,9 +10,9 @@
 - name: software | signal | enable autostart
   tags: packages,flatpak,signal,workstation-packages
   file:
-    src: /home/jay/.local/share/flatpak/exports/share/applications/org.signal.Signal.desktop
-    dest: /home/jay/.config/autostart/org.signal.Signal.desktop
-    owner: jay
-    group: jay
+    src: /home/andro/.local/share/flatpak/exports/share/applications/org.signal.Signal.desktop
+    dest: /home/andro/.config/autostart/org.signal.Signal.desktop
+    owner: andro
+    group: andro
     state: link
   when: signal is defined and signal == true

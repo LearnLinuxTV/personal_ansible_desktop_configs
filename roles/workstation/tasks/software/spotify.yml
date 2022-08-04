@@ -1,6 +1,6 @@
 - name: software | spotify | install package
   tags: packages,flatpak,spotify,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: com.spotify.Client
     method: user

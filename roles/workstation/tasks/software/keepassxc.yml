@@ -1,6 +1,6 @@
 - name: software | keepassxc | install package
   tags: packages,firefox,flatpak,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: org.keepassxc.KeePassXC
     method: user
@@ -9,19 +9,19 @@
 - name: software | keepassxc | enable autostart
   tags: packages,keepassxc,flatpak,workstation-packages
   file:
-    src: /home/jay/.local/share/flatpak/exports/share/applications/org.keepassxc.KeePassXC.desktop
-    dest: /home/jay/.config/autostart/org.keepassxc.KeePassXC.desktop
-    owner: jay
-    group: jay
+    src: /home/andro/.local/share/flatpak/exports/share/applications/org.keepassxc.KeePassXC.desktop
+    dest: /home/andro/.config/autostart/org.keepassxc.KeePassXC.desktop
+    owner: andro
+    group: andro
     state: link
 
 - name: software | keepassxc | create keepassxc install directory
   tags: packages,keepassxc,flatpak,workstation-packages
   file:
-    path: /home/jay/.config/keepassxc
+    path: /home/andro/.config/keepassxc
     state: directory
-    owner: jay
-    group: jay
+    owner: andro
+    group: andro
     mode: 0700
   register: keepassxc_config_dir
   when: keepassxc is defined and keepassxc == true
@@ -29,9 +29,9 @@
 - name: software | keepassxc | add initial keepassxc config
   tags: packages,keepassxc,flatpak,workstation-packages
   copy:
-    src: users/jay/keepassxc.ini
-    dest: /home/jay/.config/keepassxc/keepassxc.ini
-    owner: jay
-    group: jay
+    src: users/andro/keepassxc.ini
+    dest: /home/andro/.config/keepassxc/keepassxc.ini
+    owner: andro
+    group: andro
     mode: 0600
   when: keepassxc is defined and keepassxc == true

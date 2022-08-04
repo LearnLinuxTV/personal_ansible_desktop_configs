@@ -1,6 +1,6 @@
 - name: mate | peripherals | configure touchpad
   tags: mouse,mate,mate-peripherals
-  become_user: jay
+  become_user: andro
   dconf:
     key: "{{ item.key }}"
     value: "{{ item.value}}"
@@ -10,21 +10,21 @@
 
 - name: mate | peripherals | disable suspend on ac
   tags: mate,mate-desktop,mate-power-manager
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/mate/power-manager/button-lid-ac"
     value: "'nothing'"
 
 - name: mate | peripherals | disable automatic suspend on ac
   tags: mate,mate-power-manager
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/mate/power-manager/sleep-display-ac"
     value: "0"
 
 - name: mate | peripherals | fix blueman's download directory path
   tags: blueman,mate
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/blueman/transfer/shared-path"
-    value: "'/home/jay/downloads'"
+    value: "'/home/andro/downloads'"

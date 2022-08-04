@@ -9,14 +9,14 @@
 
 - name: gnome | appearance | set wallpaper
   tags: gnome,gnome-wallpaper
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/backgrounds/jay-wallpaper.png'"
 
 - name: gnome | appearance | set wallpaper position
   tags: gnome,gnome-wallpaper
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
@@ -32,14 +32,14 @@
 
 - name: gnome | appearance | set lock screen background
   tags: gnome,gnome-lockscreen
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/desktop/screensaver/picture-uri"
     value: "'file:///usr/share/backgrounds/jay-lockscreen.jpg'"
 
 - name: gnome | appearance | set lock screen background position
   tags: gnome,gnome-lockscreen
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/desktop/screensaver/picture-options"
     value: "'zoom'"

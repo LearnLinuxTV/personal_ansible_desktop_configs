@@ -2,10 +2,10 @@
 - name: software | syncthing | create directories
   tags: syncthing
   file:
-    path: /home/jay/{{ item.dir }}
+    path: /home/andro/{{ item.dir }}
     state: directory
-    owner: jay
-    group: jay
+    owner: andro
+    group: andro
     mode: 0700
   with_items:
     - { dir: bin }
@@ -19,10 +19,10 @@
 - name: software | syncthing | copy .stignore file to synced directories
   tags: syncthing
   copy:
-    src: users/jay/stignore
-    dest: /home/jay/{{ item.dir }}/.stignore
-    owner: jay
-    group: jay
+    src: users/andro/stignore
+    dest: /home/andro/{{ item.dir }}/.stignore
+    owner: andro
+    group: andro
     mode: 0600
   with_items:
     - { dir: bin }
@@ -70,10 +70,10 @@
 #- name: software | syncthing | add .desktop file for autostarting syncthing-gtk
 #  tags: syncthing
 #  copy:
-#    src: users/jay/syncthing-gtk.desktop
-#    dest: /home/jay/.config/autostart/syncthing-gtk.desktop
-#    owner: jay
-#    group: jay
+#    src: users/andro/syncthing-gtk.desktop
+#    dest: /home/andro/.config/autostart/syncthing-gtk.desktop
+#    owner: andro
+#    group: andro
 #    mode: 0600
 #  when:
 #    - syncthing is defined
@@ -82,10 +82,10 @@
 #- name: software | syncthing | ensure syncthing-gtk config folder exists
 #  tags: syncthing
 #  file:
-#    path: /home/jay/.config/syncthing-gtk
+#    path: /home/andro/.config/syncthing-gtk
 #    state: directory
-#    owner: jay
-#    group: jay
+#    owner: andro
+#    group: andro
 #    mode: 0700
 #  when:
 #   - syncthing is defined
@@ -94,10 +94,10 @@
 #- name: software | syncthing | add initial configuration file for syncthing-gtk
 #  tags: syncthing
 #  copy:
-#    src: users/jay/syncthing_config.json
-#    dest: /home/jay/.config/syncthing-gtk/config.json
-#    owner: jay
-#    group: jay
+#    src: users/andro/syncthing_config.json
+#    dest: /home/andro/.config/syncthing-gtk/config.json
+#    owner: andro
+#    group: andro
 #    mode: 0600
 #  when:
 #    - syncthing is defined
@@ -109,24 +109,24 @@
   tags: syncthing
   command: "{{ item }}"
   with_items:
-    - systemctl enable syncthing@jay
-    - systemctl restart syncthing@jay
+    - systemctl enable syncthing@andro
+    - systemctl restart syncthing@andro
   when: syncthing_installed.changed
 
 # Adjust configuration file
 - name: software | syncthing | pause to ensure config file exists
   tags: syncthing
-  become_user: jay
+  become_user: andro
   wait_for:
-    path: /home/jay/.config/syncthing/config.xml
+    path: /home/andro/.config/syncthing/config.xml
     delay: 10
   when: syncthing_installed.changed
 
 - name: software | syncthing | config.xml - disable browser
   tags: syncthing
-  become_user: jay
+  become_user: andro
   replace:
-    path: /home/jay/.config/syncthing/config.xml
+    path: /home/andro/.config/syncthing/config.xml
     regexp: "<startBrowser>true</startBrowser>"
     replace: "<startBrowser>false</startBrowser>"
   notify: restart_syncthing
@@ -136,9 +136,9 @@
 
 - name: software | syncthing | config.xml - set ui theme
   tags: syncthing
-  become_user: jay
+  become_user: andro
   replace:
-    path: /home/jay/.config/syncthing/config.xml
+    path: /home/andro/.config/syncthing/config.xml
     regexp: "<theme>default</theme>"
     replace: "<theme>dark</theme>"
   notify: restart_syncthing
@@ -149,5 +149,5 @@
 - name: software | syncthing | remove default sync directory (~/Sync) from host
   tags: syncthing
   file:
-    path: /home/jay/Sync
+    path: /home/andro/Sync
     state: absent

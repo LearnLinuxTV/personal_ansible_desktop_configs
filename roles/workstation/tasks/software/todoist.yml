@@ -13,9 +13,9 @@
   tags: packages,todoist,snap,workstation-packages
   file:
     src: /var/lib/snapd/desktop/applications/todoist_todoist.desktop
-    dest: /home/jay/.config/autostart/todoist_todoist.desktop
-    owner: jay
-    group: jay
+    dest: /home/andro/.config/autostart/todoist_todoist.desktop
+    owner: andro
+    group: andro
     state: link
   when:
     - ansible_distribution != "Archlinux"

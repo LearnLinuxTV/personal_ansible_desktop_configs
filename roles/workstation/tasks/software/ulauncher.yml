@@ -21,10 +21,10 @@
 - name: software | ulauncher | enable autostart
   tags: ulauncher
   copy:
-    src: users/jay/ulauncher.desktop
-    dest: /home/jay/.config/autostart/ulauncher.desktop
-    owner: jay
-    group: jay
+    src: users/andro/ulauncher.desktop
+    dest: /home/andro/.config/autostart/ulauncher.desktop
+    owner: andro
+    group: andro
     mode: 0600
   when:
     - ansible_distribution in ["Pop!_OS", "Ubuntu"]

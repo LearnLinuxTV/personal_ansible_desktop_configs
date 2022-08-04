@@ -1,6 +1,6 @@
 - name: software | firefox | install package
   tags: packages,firefox,flatpak,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: org.mozilla.firefox
     method: user

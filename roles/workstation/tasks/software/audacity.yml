@@ -1,6 +1,6 @@
 - name: software | audacity | install package
   tags: packages,flatpak,audacity,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: org.audacityteam.Audacity
     method: user

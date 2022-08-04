@@ -1,6 +1,6 @@
 - name: software | foliate | install package
   tags: packages,flatpak,foliate,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: com.github.johnfactotum.Foliate
     method: user

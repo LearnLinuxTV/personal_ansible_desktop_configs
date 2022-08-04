@@ -1,13 +1,13 @@
 - name: gnome | terminal | disable terminal menubar
   tags: gnome,gnome-terminal
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/terminal/legacy/default-show-menubar"
     value: "false"
 
 - name: gnome | terminal | set terminal configuration
   tags: gnome,gnome-terminal
-  become_user: jay
+  become_user: andro
   dconf:
     key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
     value: "{{ item.value}}"

@@ -15,7 +15,7 @@
 # Note: Not using systemd module because it triggers a dbus error due to no session while user is not logged in
 - name: restart_syncthing
   tags: packages,syncthing
-  command: systemctl restart syncthing@jay
+  command: systemctl restart syncthing@andro
 
 - name: update_xdg
   tags: users,config,xdg
@@ -26,13 +26,13 @@
 - name: gnome_tracker_clean_cache
   tags: gnome,tracker
   file:
-    path: /home/jay/.cache/tracker
+    path: /home/andro/.cache/tracker
     state: absent
 
 - name: gnome_tracker_clean_local_cache
   tags: gnome,tracker
   file:
-    path: /home/jay/.local/share/tracker
+    path: /home/andro/.local/share/tracker
     state: absent
 
 - name: enable_gnome_extensions

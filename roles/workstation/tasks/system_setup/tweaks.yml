@@ -6,7 +6,7 @@
 
 - name: system setup | tweaks | flatpak | add flathub remote
   tags: packages,flatpak,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak_remote:
     name: flathub
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo

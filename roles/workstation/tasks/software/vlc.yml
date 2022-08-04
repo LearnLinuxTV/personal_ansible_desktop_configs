@@ -1,6 +1,6 @@
 - name: software | vlc | install package
   tags: packages,flatpak,vlc,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: org.videolan.VLC
     method: user

@@ -1,6 +1,6 @@
 - name: mate | terminal | set terminal configuration
   tags: mate,mate-terminal
-  become_user: jay
+  become_user: andro
   dconf:
     #    key: "/org/mate/terminal/profiles/b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
     key: "/org/mate/terminal/profiles/default/{{ item.key }}"

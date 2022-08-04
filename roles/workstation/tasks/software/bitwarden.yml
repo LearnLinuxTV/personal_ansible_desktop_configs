@@ -1,6 +1,6 @@
 - name: software | bitwarden | install package
   tags: bitwarden,packages,flatpak,workstation-packages
-  become_user: jay
+  become_user: andro
   flatpak:
     name: flathub com.bitwarden.desktop
     method: user
