@@ -10,13 +10,13 @@
 - name: update_tmux_plugin_perms
   file:
     path: /home/jay/.tmux/plugins
-    owner: jay
-    group: jay
+    owner: andro
+    group: andro
     recurse: true
 
 - name: update_vim_bundle_perms
   file:
     path: /home/jay/.vim/bundle
-    owner: jay
-    group: jay
+    owner: andro
+    group: andro
     recurse: true

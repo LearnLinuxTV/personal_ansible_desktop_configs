@@ -1,0 +1,16 @@
+- name: users | andro2 | add public key
+  tags: dotfiles andro2,ssh,ssh-keys,users
+  authorized_key:
+    user: andro2
+    key: "{{ item }}"
+  with_file:
+    - users andro2/ssh/simone_id_ed25519.pub
+
+- name: users | andro2 | add sudoers file
+  tags: settings andro2,sudo,system,users
+  copy:
+    src: users/sudoers_andro2
+    dest: /etc/sudoers.d andro2
+    owner: root
+    group: root
+    mode: 0440

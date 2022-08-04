@@ -24,4 +24,4 @@
 - name: system setup | clock | set time zone
   tags: ntp,timezone,system setup
   timezone:
-    name: "America/Detroit"
+    name: "America/Matamoros"

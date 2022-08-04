@@ -4,9 +4,9 @@
 
 - block:
   # Make sure users exist on the system
-  - import_tasks: users/jay.yml
+  - import_tasks: users/andro.yml
   - import_tasks: users/root.yml
-  - import_tasks: users/simone.yml
+  - import_tasks: users/andro2.yml
 
   # Set up the ansible environment
   - import_tasks: ansible_setup.yml
