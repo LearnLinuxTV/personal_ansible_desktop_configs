@@ -34,4 +34,4 @@ After it's run for the first time manually, this Ansible config creates its own 
 ## How do I run it?
 You don't, you use this to build your own. Go through my Ansible desktop tutorial that launches on December 11th to build your "skeleton", then use this repo for syntax reference. If you insist on running this, you run it with the following command after installing Ansible:
 
-ansible-pull -U https://github.com/LearnLinuxTV/personal_ansible_desktop_configs.git
+ansible-pull -U https://github.com/4ndro666/personal_ansible_desktop_configs.git
