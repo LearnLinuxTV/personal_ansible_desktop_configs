@@ -1,7 +1,4 @@
-## How does it work?
-As mentioned above, it uses Ansible pull, so some familiarity with that is required. Luckily for you, I have a few videos on my channel that describes how Ansible pull works. Check out the LearnLinuxTV channel, the videos can be found in the Ansible playlist. I use Ansible in "pull-mode" because it handles the dynamic nature of laptops and desktops better. Afterall, they aren't always turned on. And I don't like to maintain multiple things for one purpose, so I have the same repo configuring servers as well.
-
-The folder structure breaks down like this:
+##The folder structure:
 
 **local.yml**: This is the Playbook that Ansible expects to find by default in pull-mode, think of it as an "index" of sorts that pulls other Playbooks in.
 
@@ -30,8 +27,5 @@ The folder structure breaks down like this:
 **roles/server**: After the base role runs on a host, this role runs only on hosts designated as servers. Monitoring plugins, unattended-updates, server firewall rules, and other server-related things are configured here.
 
 After it's run for the first time manually, this Ansible config creates its own Cronjob for itself on that machine so you never have to run it manually again going forward, and it will track all future commits and run them against all your machines as soon as you commit a change. You can find the playbook for Cron in the base role.
-
-## How do I run it?
-You don't, you use this to build your own. Go through my Ansible desktop tutorial that launches on December 11th to build your "skeleton", then use this repo for syntax reference. If you insist on running this, you run it with the following command after installing Ansible:
 
 ansible-pull -U https://github.com/4ndro666/personal_ansible_desktop_configs.git
