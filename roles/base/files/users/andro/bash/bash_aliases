@@ -1,4 +1,5 @@
 # aliases
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias ..='cd ..'
 alias ...='cd ../../../'
 alias ....='cd ../../../../'
@@ -45,6 +46,11 @@ alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'
 alias cat='bat --style header --style rules --style snip --style changes --style header'
 alias tb='nc termbin.com 9999'
 alias jctl="journalctl -p 3 -xb"
+alias wget="wget -U 'noleak'"
+alias curl="curl --user-agent 'noleak'"
+
+
+
 
 
 ## get top process eating memory

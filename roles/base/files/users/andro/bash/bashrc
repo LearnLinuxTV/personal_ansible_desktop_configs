@@ -11,6 +11,12 @@ source ~/.bash/bash_functions
 export TERM=xterm-256color
 export EDITOR=vim
 
+#Drop into fish
+if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]
+then
+	exec fish
+fi
+
 # Show system information at login
 if [ -t 0 ]; then
     if type -p "fastfetch" > /dev/null; then
@@ -40,6 +46,11 @@ case :$PATH: in
 	*:/home/$USER/.local/bin:*) ;;
 	*) PATH=/home/$USER/.local/bin:$PATH ;;
 esac
+
+# exports
+export PATH="${HOME}/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:"
+export PATH="${PATH}/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:"
+
 
 # Enable tab completion for tmux
 source /home/andro/.tmux/plugins/completion/tmux
