@@ -52,3 +52,15 @@ zstyle ':completion:*:scp:*' group-order files all-files users hosts-domain host
 zstyle ':completion:*:ssh:*' tag-order users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
 zstyle ':completion:*:ssh:*' group-order hosts-domain hosts-host users hosts-ipaddr
 zstyle '*' single-ignored show
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip
+# pip zsh completion end

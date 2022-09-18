@@ -1,5 +1,16 @@
-# Current PS1:
-tty -s && export PS1="[\[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\h:\W]\\$ \[$(tput sgr0)\]"
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+#[[ $- != *i* ]] && return
+
+#alias ls='ls --color=auto'
+#PS1='[\u@\h \W]\$ '
+
+# PS1 Prompt
+tty -s && export PS1="\[\033[38;5;35m\]\t [\[\033[38;5;33m\]\j\[\033[38;5;35m\]] [\h:\[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput setaf 3)\]\[\033[38;5;35m\]]\n\\[\033[38;5;35m\]💀 \[$(tput sgr0)\]"
+
 
 # Env
 export TERM=xterm-256color
@@ -36,17 +47,6 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 alias svim='sudo vim'
 alias tn='tmux new -s'
 alias wget='wget -c'
-alias ip="ip -color"
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-alias psmem='ps auxf | sort -nr -k 4'
-alias grubup="sudo update-grub"
-alias big="expac -H M '%m\t%n' | sort -h | nl" 
-alias dir='dir --color=auto'
-alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'
-alias cat='bat --style header --style rules --style snip --style changes --style header'
-alias tb='nc termbin.com 9999'
-alias jctl="journalctl -p 3 -xb"
-
 
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
@@ -74,9 +74,9 @@ alias chgrp='chgrp --preserve-root'
 alias reload="source ~/.bashrc"
 
 # package management
-alias update='sudo pacman -Syyy'
+alias update='pacman -Syy'
 alias upgrade='sudo pacman -Sy && sudo powerpill -Su && paru -Su'
-alias install='sudo pacman -S'
+alias install='yay -S'
 
 ## Functions
 

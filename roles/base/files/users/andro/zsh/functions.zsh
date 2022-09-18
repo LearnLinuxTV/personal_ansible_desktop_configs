@@ -155,3 +155,68 @@ precmd_disown() {
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd precmd_disown
+
+# Make a directory, then go there
+md() {
+    test -n "$1" || return
+    mkdir -p "$1" && cd "$1"
+}
+
+# "path" shows current path, one element per line.
+# If an argument is supplied, grep for it.
+path() {
+    test -n "$1" && {
+        echo $PATH | perl -p -e "s/:/\n/g;" | grep -i "$1"
+    } || {
+        echo $PATH | perl -p -e "s/:/\n/g;"
+    }
+}
+
+# Change directory and ls automatically
+cl() {
+	local dir="$1"
+	local dir="${dir:=$HOME}"
+	if [[ -d "$dir" ]]; then
+		cd "$dir" >/dev/null; ls
+	else
+		echo "bash: cl: $dir: Directory not found"
+	fi
+}
+
+
+#Note taker
+note () {
+    # if file doesn't exist, create it
+    if [[ ! -f $HOME/.notes ]]; then
+        touch "$HOME/.notes"
+    fi
+
+    if ! (($#)); then
+        # no arguments, print file
+        cat "$HOME/.notes"
+    elif [[ "$1" == "-c" ]]; then
+        # clear file
+        printf "%s" > "$HOME/.notes"
+    else
+        # add all arguments to file
+        printf "%s\n" "$*" >> "$HOME/.notes"
+    fi
+}
+
+#Calculator
+calc() {
+    echo "scale=3;$@" | bc -l
+}
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
+

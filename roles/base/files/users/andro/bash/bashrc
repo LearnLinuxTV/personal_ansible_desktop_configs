@@ -1,3 +1,13 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+#[[ $- != *i* ]] && return
+
+#alias ls='ls --color=auto'
+PS1='%F{35}%* [%j]${git_prompt} [%m:%F{75}%f%F{69}%c%f%F{35}] %#%f ${newline}💀 '
+
 # source bash prompt
 source ~/.bash/bash_prompt
 
@@ -7,15 +17,18 @@ source ~/.bash/bash_aliases
 # Source bash functions
 source ~/.bash/bash_functions
 
-# Env
+# Source Command not found
+source /usr/share/doc/pkgfile/command-not-found.bash
+
+# Envvironment
 export TERM=xterm-256color
 export EDITOR=vim
 
 #Drop into fish
-if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]
-then
-	exec fish
-fi
+#if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]
+#then
+#	exec fish
+#fi
 
 # Show system information at login
 if [ -t 0 ]; then
@@ -35,6 +48,15 @@ HISTTIMEFORMAT="%Y-%m-%d %T "
 # Correct simple errors while using cd
 shopt -s cdspell
 
+# complete command names and file names
+complete -cf sudo
+
+# Auto cd when just entering path
+shopt -s autocd
+
+#Line wrap on window resize
+shopt -s checkwinsize
+
 # Add /home/$USER/bin to $PATH
 case :$PATH: in
 	*:/home/$USER/bin:*) ;;
@@ -47,9 +69,22 @@ case :$PATH: in
 	*) PATH=/home/$USER/.local/bin:$PATH ;;
 esac
 
-# exports
-export PATH="${HOME}/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:"
-export PATH="${PATH}/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:"
+# Add /root/.local/bin to $PATH (for pip and pipx)
+#case :$PATH: in
+#	*:/root/.local/bin:*) ;;
+#	*) PATH=/root/.local/bin:$PATH ;;
+#esac
+
+# Add /home/$USER/andro-env/bin to $PATH
+#case :$PATH: in
+#	*:/home/$USER/andro-env:*) ;;
+#	*) PATH=/home/$USER/andro-env:$PATH ;;
+#esac
+
+#exports
+#export PATH="${HOME}/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:"
+#export PATH="${PATH}/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:"
+
 
 
 # Enable tab completion for tmux
@@ -69,6 +104,7 @@ alias rm='rm -I --preserve-root'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
+alias magic='sudo /usr/local/bin/magic.sh'
 
 # Parenting changing perms on / #
 alias chown='chown --preserve-root'
@@ -77,3 +113,17 @@ alias chgrp='chgrp --preserve-root'
 
 # reload bash config
 alias reload="source ~/.bashrc"
+
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
+
+

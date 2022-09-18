@@ -1,3 +1,30 @@
 [user]
 	email = 97570105+4ndr0666@users.noreply.github.com
 	name = 4ndr0
+
+
+[core]
+	editor = vim
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[alias]
+	gco = checkout
+	br = branch
+	ci = commit
+	st = status
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+

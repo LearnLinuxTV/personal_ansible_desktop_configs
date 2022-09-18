@@ -36,3 +36,14 @@ setopt extendedGlob
 
 # Turn on command substitution in the prompt (and parameter expansion and arithmetic expansion).
 setopt promptsubst
+
+
+setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob                                               # Case insensitive globbing
+setopt rcexpandparam                                            # Array expension with parameters
+setopt nocheckjobs                                              # Don't warn about running processes when exiting
+setopt numericglobsort                                          # Sort filenames numerically when it makes sense
+setopt appendhistory                                            # Immediately append history instead of overwriting
+setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+setopt auto_pushd
+setopt pushdminus

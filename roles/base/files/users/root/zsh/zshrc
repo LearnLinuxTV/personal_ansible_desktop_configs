@@ -1,5 +1,59 @@
-###### Prompt
-prompt='%F{35}%* [%j] [%m:%F{75}%f%F{69}%c%f%F{35}] %F{black}%K{red}%#%f%k '
+## Path section
+# Set $PATH if ~/.local/bin exist
+#if [ -d "$HOME/.local/bin" ]; then
+#    export PATH=$HOME/.local/bin:$PATH
+#fi
+
+eval "$(starship init zsh)"
+function set_win_title(){
+    echo -ne "\033]0; $USER@$HOST:${PWD/$HOME/~} \007"
+}
+precmd_functions+=(set_win_title)
+
+
+## Plugins section: Enable fish style features
+# Use syntax highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Use autosuggestion
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Use history substring search
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# Use fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# Arch Linux command-not-found support, you must have package pkgfile installed
+# https://wiki.archlinux.org/index.php/Pkgfile#.22Command_not_found.22_hook
+[[ -e /usr/share/doc/pkgfile/command-not-found.zsh ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
+
+# Advanced command-not-found hook
+[[ -e /usr/share/doc/find-the-command/ftc.zsh ]] && source /usr/share/doc/find-the-command/ftc.zsh
+
+
+####### Prompt
+prompt='%F{35}%* [%j]${git_prompt} [%m:%F{75}%f%F{69}%c%f%F{35}] %#%f ${newline}💀 '
+
+# Completion.
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+zstyle ':completion:*' rehash true                              # automatically find new executables in path 
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' menu select
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*:descriptions' format '%U%F{cyan}%d%f%u'
+
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zcache
+
+# automatically load bash completion functions
+autoload -U +X bashcompinit && bashcompinit
 
 ##### History
 
@@ -20,11 +74,39 @@ zle -N down-line-or-beginning-search
 [[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
+HISTFILE=~/.zhistory
+HISTSIZE=50000
+SAVEHIST=10000
 
-##### Aliases
+if command -v colordiff > /dev/null 2>&1; then
+    alias diff="colordiff -Nuar"
+else
+    alias diff="diff -Nuar"
+fi
+
+
+## Useful aliases
+alias grubup="sudo update-grub"
+alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+alias tarnow='tar -acf '
+alias untar='tar -zxvf '
+alias wget='wget -c '
+alias rmpkg="sudo pacman -Rdd"
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias ..='cd ..'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias hw='hwinfo --short'                                   # Hardware Info
+alias big="expac -H M '%m\t%n' | sort -h | nl"              # Sort installed packages according to size in MB (expac must be installed)
+alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'			# List amount of -git packages
 alias back='cd $OLDPWD'
 alias c='clear'
 alias cd..='cd ..'
@@ -54,23 +136,14 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 alias svim='sudo vim'
 alias tn=' tmux new -s'
 alias wget='wget -c'
-alias ip="ip -color"
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-alias psmem='ps auxf | sort -nr -k 4'
-alias grubup="sudo update-grub"
-alias big="expac -H M '%m\t%n' | sort -h | nl" 
-alias dir='dir --color=auto'
-alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'
-alias cat='bat --style header --style rules --style snip --style changes --style header'
-alias tb='nc termbin.com 9999'
-alias jctl="journalctl -p 3 -xb"
 
 
-if command -v colordiff > /dev/null 2>&1; then
-    alias diff="colordiff -Nuar"
-else
-    alias diff="diff -Nuar"
-fi
+# Get fastest mirrors 
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist" 
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist" 
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist" 
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist" 
+
 
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
@@ -89,10 +162,6 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# package management
-alias update='sudo pacman -Syyy'
-alias upgrade='sudo pacman -Sy && sudo powerpill -Su && paru -Su'
-alias install='sudo pacman -S'
 
 ##### Functions
 
@@ -125,6 +194,7 @@ reload () {
 }
 
 
+
 ##### shopt
 
 # save timestamp of command and duration
@@ -154,5 +224,8 @@ setopt nonomatch
 # extended globbing, awesome!
 setopt extendedGlob
 
-# Turn on command substitution in the prompt (and parameter expansion and arithmetic expansion).
+# Turn on command substitution in the prompt (and parameter expansion 
 setopt promptsubst
+
+
+
