@@ -28,4 +28,6 @@
 
 After it's run for the first time manually, this Ansible config creates its own Cronjob for itself on that machine so you never have to run it manually again going forward, and it will track all future commits and run them against all your machines as soon as you commit a change. You can find the playbook for Cron in the base role.
 
+[![CodeQL](https://github.com/4ndr0666/Ansible/actions/workflows/codeql-analysis.yml/badge.svg?branch=4ndro666)](https://github.com/4ndr0666/Ansible/actions/workflows/codeql-analysis.yml)
+
 ansible-pull -U https://github.com/4ndro666/personal_ansible_desktop_configs.git
